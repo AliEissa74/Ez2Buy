@@ -7,17 +7,17 @@ namespace Ez2BuyWeb.Controllers
 {
     public class CategoryController : Controller
     {
-        private readonly ICategoryRepository _categoryRepo;
-        public CategoryController(ICategoryRepository db)
+        private readonly IUnitOfWork _unitOfWork;
+        public CategoryController(IUnitOfWork unitOfWork)
         {
-			_categoryRepo = db;
+			_unitOfWork = unitOfWork;
         }
 
         //get all categories from database
         public IActionResult Index()
         {
             //get all categories from database
-            List<Category> objCategoryList = _categoryRepo.GetAll().ToList();
+            List<Category> objCategoryList = _unitOfWork.Category.GetAll().ToList();
             return View(objCategoryList);  //passing all categories to view
         }
 
@@ -37,8 +37,8 @@ namespace Ez2BuyWeb.Controllers
             }
             if (ModelState.IsValid)
             {
-				_categoryRepo.Add(obj);
-				_categoryRepo.Save();
+				_unitOfWork.Category.Add(obj);
+				_unitOfWork.Save();
                 TempData["success"] = "Category Created successfully";
                 return RedirectToAction("Index");
             }
@@ -56,7 +56,7 @@ namespace Ez2BuyWeb.Controllers
             {
                 return NotFound();
             }
-            Category? CategoryFromDb = _categoryRepo.GetById(u=>u.Id == id);
+            Category? CategoryFromDb = _unitOfWork.Category.GetById(u=>u.Id == id);
             //Category CategoryFromDb = _db.Categories.FirstOrDefault(u=>u.Id==id);
             if (CategoryFromDb == null)
             {
@@ -71,8 +71,8 @@ namespace Ez2BuyWeb.Controllers
 
             if (ModelState.IsValid)
             {
-				_categoryRepo.Update(obj);
-				_categoryRepo.Save();
+				_unitOfWork.Category.Update(obj);
+				_unitOfWork.Save();
                 TempData["success"] = "Category Updated successfully";
                 return RedirectToAction("Index");
             }
@@ -89,7 +89,7 @@ namespace Ez2BuyWeb.Controllers
             {
                 return NotFound();
             }
-            Category? CategoryFromDb = _categoryRepo.GetById(u => u.Id == id);
+            Category? CategoryFromDb = _unitOfWork.Category.GetById(u => u.Id == id);
             //Category CategoryFromDb = _db.Categories.FirstOrDefault(u=>u.Id==id);
             if (CategoryFromDb == null)
             {
@@ -101,13 +101,13 @@ namespace Ez2BuyWeb.Controllers
         [HttpPost, ActionName("Delete")]   //endpoint here is delete
         public IActionResult DeletePost(int? id)  //deletepost bec the cant have same name &  param
         {
-            Category? obj = _categoryRepo.GetById(u => u.Id == id);
+            Category? obj = _unitOfWork.Category.GetById(u => u.Id == id);
             if (obj == null)
             {
                 return NotFound();
             }
-            _categoryRepo.Delete(obj);
-			_categoryRepo.Save();
+			_unitOfWork.Category.Delete(obj);
+			_unitOfWork.Save();
             TempData["success"] = "Category Deleted successfully";
             return RedirectToAction("Index");
         }

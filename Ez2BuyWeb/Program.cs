@@ -16,8 +16,9 @@ namespace Ez2BuyWeb
 			//retrive the connection string from appsettings.json
 			builder.Services.AddDbContext<ApplicationDbContext>(options =>
                 options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
-			//register the repository
-			builder.Services.AddScoped<ICategoryRepository, CategoryRepository>();
+            //register the repository
+            builder.Services.AddScoped<IUnitOfWork,UnitOfWork>();
+
 
 
 

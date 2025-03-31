@@ -1,26 +1,26 @@
 ﻿using Ez2Buy.DataAccess.Contracts;
 using Ez2Buy.DataAccess.Data;
-using Ez2Buy.DataAccess.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Linq.Expressions;
 using System.Text;
 using System.Threading.Tasks;
 
 namespace Ez2Buy.DataAccess.Repositories
 {
-	public class CategoryRepository : RepositoryBase<Category>,ICategoryRepository
+	public class UnitOfWork : IUnitOfWork
 	{
 		private ApplicationDbContext _db;
-		public CategoryRepository(ApplicationDbContext db) : base(db)
+		public ICategoryRepository Category { get; private set; }
+		public UnitOfWork(ApplicationDbContext db)
 		{
 			_db = db;
+			Category = new CategoryRepository(_db);
 		}
 
-		public void Update(Category obj)
+		public void Save()
 		{
-			_db.Categories.Update(obj);
+			_db.SaveChanges();
 		}
 	}
 }
