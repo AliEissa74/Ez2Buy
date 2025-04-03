@@ -3,25 +3,26 @@ using Ez2Buy.DataAccess.Data;
 using Ez2Buy.DataAccess.Models;
 using Microsoft.AspNetCore.Mvc;
 
-namespace Ez2BuyWeb.Controllers
+namespace Ez2BuyWeb.Areas.Admin.Controllers
 {
-    public class CategoryController : Controller
+    [Area("Admin")]
+    public class ProductController : Controller
     {
         private readonly IUnitOfWork _unitOfWork;
-        public CategoryController(IUnitOfWork unitOfWork)
+        public ProductController(IUnitOfWork unitOfWork)
         {
-			_unitOfWork = unitOfWork;
+            _unitOfWork = unitOfWork;
         }
 
         //get all categories from database
         public IActionResult Index()
         {
             //get all categories from database
-            List<Category> objCategoryList = _unitOfWork.Category.GetAll().ToList();
-            return View(objCategoryList);  //passing all categories to view
+            List<Product> objProductList = _unitOfWork.Product.GetAll().ToList();
+            return View(objProductList);  //passing all categories to view
         }
 
-        //add category
+        //add Product
         public IActionResult Create()
         {
 
@@ -29,17 +30,13 @@ namespace Ez2BuyWeb.Controllers
         }
 
         [HttpPost]
-        public IActionResult Create(Category obj)
+        public IActionResult Create(Product obj)
         {
-            if (obj.Name == obj.DisplayOrder.ToString())
-            {
-                ModelState.AddModelError("name", "Category Name and Display Order can't be same");
-            }
             if (ModelState.IsValid)
             {
-				_unitOfWork.Category.Add(obj);
-				_unitOfWork.Save();
-                TempData["success"] = "Category Created successfully";
+                _unitOfWork.Product.Add(obj);
+                _unitOfWork.Save();
+                TempData["success"] = "Product Created successfully";
                 return RedirectToAction("Index");
             }
             else
@@ -49,31 +46,31 @@ namespace Ez2BuyWeb.Controllers
 
         }
 
-        //Edit category
+        //Edit Product
         public IActionResult Edit(int? id)
         {
             if (id == null || id == 0)
             {
                 return NotFound();
             }
-            Category? CategoryFromDb = _unitOfWork.Category.GetById(u=>u.Id == id);
+            Product? productFromDb = _unitOfWork.Product.GetById(u => u.Id == id);
             //Category CategoryFromDb = _db.Categories.FirstOrDefault(u=>u.Id==id);
-            if (CategoryFromDb == null)
+            if (productFromDb == null)
             {
                 return NotFound();
             }
-            return View(CategoryFromDb);
+            return View(productFromDb);
         }
 
         [HttpPost]
-        public IActionResult Edit(Category obj)
+        public IActionResult Edit(Product obj)
         {
 
             if (ModelState.IsValid)
             {
-				_unitOfWork.Category.Update(obj);
-				_unitOfWork.Save();
-                TempData["success"] = "Category Updated successfully";
+                _unitOfWork.Product.Update(obj);
+                _unitOfWork.Save();
+                TempData["success"] = "Product Updated successfully";
                 return RedirectToAction("Index");
             }
             else
@@ -82,34 +79,34 @@ namespace Ez2BuyWeb.Controllers
             }
         }
 
-        //Delete category
+        //Delete Product
         public IActionResult Delete(int? id)
         {
             if (id == null || id == 0)
             {
                 return NotFound();
             }
-            Category? CategoryFromDb = _unitOfWork.Category.GetById(u => u.Id == id);
+            Product? productFromDb = _unitOfWork.Product.GetById(u => u.Id == id);
             //Category CategoryFromDb = _db.Categories.FirstOrDefault(u=>u.Id==id);
-            if (CategoryFromDb == null)
+            if (productFromDb == null)
             {
                 return NotFound();
             }
-            return View(CategoryFromDb);
+            return View(productFromDb);
         }
 
         [HttpPost, ActionName("Delete")]   //endpoint here is delete
         public IActionResult DeletePost(int? id)  //deletepost bec the cant have same name &  param
         {
-            Category? obj = _unitOfWork.Category.GetById(u => u.Id == id);
+            Product? obj = _unitOfWork.Product.GetById(u => u.Id == id);
             if (obj == null)
             {
                 return NotFound();
             }
-			_unitOfWork.Category.Delete(obj);
-			_unitOfWork.Save();
-            TempData["success"] = "Category Deleted successfully";
+            _unitOfWork.Product.Delete(obj);
+            _unitOfWork.Save();
+            TempData["success"] = "Product Deleted successfully";
             return RedirectToAction("Index");
         }
     }
-}   
+}

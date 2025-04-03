@@ -2,8 +2,9 @@ using Ez2Buy.DataAccess.Models;
 using Microsoft.AspNetCore.Mvc;
 using System.Diagnostics;
 
-namespace Ez2BuyWeb.Controllers
+namespace Ez2BuyWeb.Areas.Customer.Controllers
 {
+    [Area("Customer")]
     public class HomeController : Controller
     {
         private readonly ILogger<HomeController> _logger;

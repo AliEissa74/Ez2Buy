@@ -1,0 +1,54 @@
+﻿@model Product
+@{
+    ViewData["Title"] = "Edit";
+}
+
+<div class="card shadow border-0 mt-4">
+    <div class="card-header bg-secondary bg-gradient ml-0 py-3">
+        <div class="row">
+            <div class="col-12 text-center">
+                <h2 class="text-white py-2"> Edit Product</h2>
+            </div>
+        </div>
+    </div>
+    <div class="card-body p-4">
+        <form method="post" class="row">
+            <div class="border p-3 mt-4">
+                <div class="mt-2 p-1">
+                    <label asp-for="Name" class="form-label p-0 fw-bold"></label>
+                    <input asp-for="Name" class="form-control" aria-describedby="emailHelp">
+                    @* <small id="emailHelp" class="form-text text-muted">We'll never share your email with anyone else.</small> *@
+                </div>
+                <div class="mt-2 p-1">
+                    <label asp-for="Description" class="form-label p-0 fw-bold"></label>
+                    <textarea asp-for="Description" class="form-control"></textarea>
+                </div>
+                <div class="mt-2 p-1">
+                    <label asp-for="ListPrice" class="form-label p-0 fw-bold"></label>
+                    <input asp-for="ListPrice" class="form-control">
+                </div>
+                <div class="mt-2 p-1">
+                    <label asp-for="Price" class="form-label p-0 fw-bold"></label>
+                    <input asp-for="Price" class="form-control">
+                </div>
+                <div class=" row mt-3">
+                    <div class="col-6 col-md-3">
+                        <button type="submit" class="btn btn-primary form-control">Update</button>
+                    </div>
+                    <div class="col-6 col-md-3">
+                        <a asp-controller="Product" asp-action="Index" class="btn btn-outline-secondary form-control">Back to List</a>
+
+                    </div>
+                </div>
+            </div>
+        </form>
+
+    </div>
+</div>
+
+
+
+@*code for client side validation*@
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+}

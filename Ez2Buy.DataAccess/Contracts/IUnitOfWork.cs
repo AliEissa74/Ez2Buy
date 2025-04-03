@@ -9,6 +9,7 @@ namespace Ez2Buy.DataAccess.Contracts
 	public interface IUnitOfWork
 	{
 		ICategoryRepository Category { get; }
-		void Save();
+        IProductRepository Product { get; }
+        void Save();
 	}
 }
