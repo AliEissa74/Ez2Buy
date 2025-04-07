@@ -11,9 +11,10 @@ namespace Ez2Buy.DataAccess.Contracts
 	{
 		//T - Category, Product, Order,etc
 		//we remove update method bec Different Update Strategies
-		IEnumerable<T> GetAll();
-		T GetById(Expression<Func<T,bool>> filter);
+		IEnumerable<T> GetAll(string? includePorperties = null);
+		T GetById(Expression<Func<T,bool>> filter, string? includePorperties = null);
 		void Add(T model);
+
 		void Delete(T model);
 		void DeleteRange(IEnumerable<T> model);
 	}

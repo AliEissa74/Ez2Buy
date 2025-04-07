@@ -3,6 +3,7 @@ using Ez2Buy.DataAccess.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -10,9 +11,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Ez2Buy.DataAccess.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20250404004639_addForeignKeyForCategoryProductRelation")]
+    partial class addForeignKeyForCategoryProductRelation
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -76,10 +79,6 @@ namespace Ez2Buy.DataAccess.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("ImageUrl")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
                     b.Property<double>("ListPrice")
                         .HasColumnType("float");
 
@@ -102,7 +101,6 @@ namespace Ez2Buy.DataAccess.Migrations
                             Id = 1,
                             CategoryId = 1,
                             Description = "The latest iPhone model with cutting-edge technology, featuring a powerful A15 Bionic chip, a stunning 6.1-inch Super Retina XDR display, and a pro camera system.",
-                            ImageUrl = "",
                             ListPrice = 1199.99,
                             Name = "iPhone 14 Pro",
                             Price = 1099.99
@@ -112,7 +110,6 @@ namespace Ez2Buy.DataAccess.Migrations
                             Id = 2,
                             CategoryId = 1,
                             Description = "The Samsung Galaxy S23 offers a sleek design with powerful performance, featuring a 6.1-inch AMOLED display, and the latest Snapdragon chipset for speed and efficiency.",
-                            ImageUrl = "",
                             ListPrice = 999.99000000000001,
                             Name = "Samsung Galaxy S23",
                             Price = 899.99000000000001
@@ -122,7 +119,6 @@ namespace Ez2Buy.DataAccess.Migrations
                             Id = 3,
                             CategoryId = 2,
                             Description = "Adidas Ultraboost 22 running shoes combine exceptional comfort with innovative design, featuring responsive Boost cushioning and a supportive Primeknit upper for a snug fit.",
-                            ImageUrl = "",
                             ListPrice = 180.0,
                             Name = "Adidas Ultraboost 22",
                             Price = 159.99000000000001
@@ -132,7 +128,6 @@ namespace Ez2Buy.DataAccess.Migrations
                             Id = 4,
                             CategoryId = 2,
                             Description = "A soft and breathable cotton t-shirt that is perfect for everyday casual wear. Available in a variety of colors and fits for all sizes.",
-                            ImageUrl = "",
                             ListPrice = 20.0,
                             Name = "Basic Cotton T-shirt",
                             Price = 15.0
@@ -142,7 +137,6 @@ namespace Ez2Buy.DataAccess.Migrations
                             Id = 5,
                             CategoryId = 3,
                             Description = "A fast-heating electric kettle with an automatic shut-off feature for safety, ideal for boiling water quickly for tea, coffee, and other beverages.",
-                            ImageUrl = "",
                             ListPrice = 24.989999999999998,
                             Name = "Electric Kettle",
                             Price = 19.989999999999998

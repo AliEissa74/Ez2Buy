@@ -18,6 +18,8 @@ namespace Ez2Buy.DataAccess.Repositories
 			_db = db;
 			this.dbSet = _db.Set<T>();  // _db.Categories == dbSet it a reference to any table(dbset is generic)
 
+			_db.Products.Include(u => u.Category); //this is used to include the category in the product table
+
 		}
 
 		public void Add(T model)
@@ -25,16 +27,32 @@ namespace Ez2Buy.DataAccess.Repositories
 			_db.Add(model);
 		}
 
-		public IEnumerable<T> GetAll()
+		public IEnumerable<T> GetAll(string? includePorperties = null)
 		{
 			IQueryable<T> query = dbSet;
+			if (!string.IsNullOrEmpty(includePorperties))
+			{
+				foreach (var includeProp in includePorperties
+					.Split(new char[] { ',' }, StringSplitOptions.RemoveEmptyEntries))
+				{
+					query = query.Include(includeProp);
+				}
+			}
 			return query.ToList();
 		}
 
-		public T GetById(System.Linq.Expressions.Expression<Func<T, bool>> filter)
+		public T GetById(System.Linq.Expressions.Expression<Func<T, bool>> filter, string? includePorperties = null)
 		{
 			IQueryable<T> query = dbSet;
 			query = query.Where(filter);
+			if (!string.IsNullOrEmpty(includePorperties))
+			{
+				foreach (var includeProp in includePorperties
+					.Split(new char[] { ',' }, StringSplitOptions.RemoveEmptyEntries))
+				{
+					query = query.Include(includeProp);
+				}
+			}
 			return query.FirstOrDefault(); //this is same as Category controller firstorDefault
 		}
 

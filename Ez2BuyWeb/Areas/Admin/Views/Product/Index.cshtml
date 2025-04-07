@@ -1,4 +1,6 @@
-﻿@model IEnumerable<Ez2Buy.DataAccess.Models.Product>
+﻿ @* @model IEnumerable<Ez2BuyWeb.ViewModels.ProductVM> *@
+@model IEnumerable<Ez2Buy.DataAccess.Models.Product>
+
 @{
 	ViewData["title"] = "Product Page";
 }
@@ -26,38 +28,23 @@
 			</div>
 
 		</div>
-		<table class="table table-bordered table-striped">
+		<table id="tblData" class="table table-bordered table-striped">
 			<thead>
 				<tr>
 					<th>Product Name</th>
-					<th>Description</th>
+					@* <th>Description</th> *@
 					<th>List Price</th>
 					<th>Price</th>
-					<th>Category</th>
+					<th>Category Name</th>
 					<th></th>
 
 				</tr>
 			</thead>
-			<tbody>
-				@foreach (var item in Model)
-				{
-					<tr>
-						<td>@item.Name</td>
-						<td>@item.Description</td>
-						<td>@item.ListPrice</td>
-						<td>@item.Price</td>
-						<td></td>
 
-
-						<td class="text-center">
-							<div class="w-75 btn-group justify-content-center" role="group">
-								<a asp-controller="Product" asp-action="Edit" asp-route-id="@item.Id" class="btn btn-primary mx-2"><i class="bi bi-pencil-square me-2"></i>Edit</a>
-								<a asp-controller="Product" asp-action="Delete" asp-route-id="@item.Id" class="btn btn-danger mx-2"><i class="bi bi-trash me-2"></i>Delete</a>
-							</div>
-						</td>
-					</tr>
-				}
-			</tbody>
 		</table>
 	</div>
 </div>
+
+@section Scripts{
+	<script src="~/js/product.js"></script>
+}

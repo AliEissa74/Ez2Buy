@@ -1,6 +1,8 @@
 using Ez2Buy.DataAccess.Contracts;
 using Ez2Buy.DataAccess.Data;
 using Ez2Buy.DataAccess.Repositories;
+using Ez2Buy.Services.Contracts;
+using Ez2Buy.Services.Services;
 using Microsoft.EntityFrameworkCore;
 
 namespace Ez2BuyWeb
@@ -19,10 +21,13 @@ namespace Ez2BuyWeb
             //register the repository
             builder.Services.AddScoped<IUnitOfWork,UnitOfWork>();
 
+			// Register Services
+			builder.Services.AddScoped<IProductService, ProductService>();
+			builder.Services.AddScoped<ICategoryService, CategoryService>();
 
 
 
-			var app = builder.Build();
+            var app = builder.Build();
 
             // Configure the HTTP request pipeline.
             if (!app.Environment.IsDevelopment())
