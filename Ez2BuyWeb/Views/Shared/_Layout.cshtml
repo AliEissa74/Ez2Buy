@@ -6,49 +6,140 @@
     <title>@ViewData["Title"] - Ez2BuyWeb</title>
     <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap-sandstone.min.css" />
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
-    <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/css/toastr.min.css"/> @* lib for notifications *@
+    <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/css/toastr.min.css" /> @* lib for notifications *@
     <link rel="stylesheet" href="//cdn.datatables.net/2.2.2/css/dataTables.dataTables.min.css" />
     <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
     <link rel="stylesheet" href="~/Ez2BuyWeb.styles.css" asp-append-version="true" />
 </head>
 <body>
+    @*     <header>
+    <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-dark bg-primary border-bottom box-shadow mb-3">
+    <div class="container-fluid">
+    <a class="navbar-brand text-light" asp-area="" asp-controller="Home" asp-action="Index">Ez2BuyWeb</a>
+    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target=".navbar-collapse" aria-controls="navbarSupportedContent"
+    aria-expanded="false" aria-label="Toggle navigation">
+    <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="navbar-collapse collapse d-sm-inline-flex justify-content-between ">
+    <ul class="navbar-nav flex-grow-1">
+    <li class="nav-item">
+    <a class="nav-link" asp-area="Customer" asp-controller="Home" asp-action="Index">Home</a>
+    </li>
+
+    <li class="nav-item">
+    <a class="nav-link" asp-area="Customer" asp-controller="Home" asp-action="Privacy">Privacy</a>
+    </li>
+    <li class="nav-item dropdown">
+    <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+    Content Management
+    </a>
+    <ul class="dropdown-menu">
+    <li class="nav-item">
+    <a class="dropdown-item" asp-area="Admin" asp-controller="Category" asp-action="Index">Category</a>
+    </li>
+    <li class="nav-item">
+    <a class="dropdown-item" asp-area="Admin" asp-controller="Product" asp-action="Index">Product</a>
+    </li>
+    <li><hr class="dropdown-divider"></li>
+    </ul>
+    </li>
+    </ul>
+    </div>
+    </div>
+    </nav>
+    </header> *@
+
+
+    <!-- Top Info Bar -->
+    <div class="top-bar border-bottom small py-2">
+        <div class="container d-flex justify-content-between align-items-center">
+            <div>
+                <span>Follow Us: </span>
+                <a class=""><i class="bi bi-facebook fs-4 text-dark"></i></a>
+                @*             <i class="bi bi-headset text-info"></i> +060 (800) 801-582 |
+                <i class="bi bi-envelope"></i> Ez2Buy@example.com *@
+            </div>
+            <div class="d-flex justify-content-center flex-grow-1">
+                <a href="#" class="text-decoration-none me-3 text-dark"><i class="bi bi-geo-alt"></i>Home</a>
+                <a href="#" class="text-decoration-none me-3"><i class="bi bi-clock"></i> AboutUs</a>
+                <a href="#" class="text-decoration-none me-3"><i class="bi bi-person"></i> My account</a>
+                @* <a href="#" class="text-decoration-none me-3"><i class="bi bi-box-arrow-in-right"></i> Login</a> *@
+
+            </div>
+            <div>
+                <a href="#" class="btn btn-outline-dark btn-sm me-2">Sign In</a>
+                <a href="#" class="btn btn-dark btn-sm">Sign Up</a>
+            </div>
+        </div>
+    </div>
+
+    <!-- Main Navbar -->
     <header>
-        <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-dark bg-primary border-bottom box-shadow mb-3">
-            <div class="container-fluid">
-                <a class="navbar-brand text-light" asp-area="" asp-controller="Home" asp-action="Index">Ez2BuyWeb</a>
-                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target=".navbar-collapse" aria-controls="navbarSupportedContent"
-                        aria-expanded="false" aria-label="Toggle navigation">
-                    <span class="navbar-toggler-icon"></span>
+        <nav class="navbar navbar-expand-lg navbar-light bg-white py-3">
+            <div class="container">
+                <!-- Logo -->
+                <a class="navbar-brand fw-bold" asp-area="Customer" asp-controller="Home" asp-action="Index">Ez2Buy<span class="text-warning">.</span></a>
+
+                <!-- Search and Category -->
+                <form class="d-flex flex-grow-1 mx-4 " role="search">
+                    <div class="input-group w-100">
+                        <button class="btn btn-outline-secondary dropdown-toggle" type="button" data-bs-toggle="dropdown">
+                            All Category
+                        </button>
+                        <ul class="dropdown-menu">
+                            <li><a class="dropdown-item" href="#">Electronics</a></li>
+                            <li><a class="dropdown-item" href="#">Fashion</a></li>
+                            <li><a class="dropdown-item" href="#">Home</a></li>
+                        </ul>
+                        <input type="search" class="form-control" placeholder="Search Products Here...">
+                        <button class="btn btn-dark" type="submit"><i class="bi bi-search"></i></button>
+                    </div>
+                </form>
+
+                <!-- Icons -->
+                <div class="d-flex align-items-center">
+                    <a href="#" class="text-dark me-3 fs-4"><i class="bi bi-person"></i></a>
+                    <a href="#" class="text-dark me-3 fs-5"><i class="bi bi-heart"></i></a>
+                    <a href="#" class="text-dark position-relative">
+                        <i class="bi bi-bag fs-5"></i>
+                        <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-warning">
+                            2
+                        </span>
+                    </a>
+                </div>
+            </div>
+        </nav>
+
+        <!-- Bottom Navigation Menu -->
+        <nav class="navbar navbar-expand-lg navbar-dark bg-dark py-2">
+            <div class="container">
+                <button class="btn btn-warning me-3">
+                    <a class="nav-link" asp-area="Admin" asp-controller="Category" asp-action="Index"><i class="bi bi-list"></i> CATEGORIES</a>
                 </button>
-                <div class="navbar-collapse collapse d-sm-inline-flex justify-content-between ">
-                    <ul class="navbar-nav flex-grow-1">
-                        <li class="nav-item">
-                            <a class="nav-link" asp-area="Customer" asp-controller="Home" asp-action="Index">Home</a>
-                        </li>
-                        
-                        <li class="nav-item">
-                            <a class="nav-link" asp-area="Customer" asp-controller="Home" asp-action="Privacy">Privacy</a>
-                        </li>
+
+                <div class="collapse navbar-collapse">
+                    <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+                        <li class="nav-item"><a class="nav-link" asp-area="Customer" asp-controller="Home" asp-action="Index">Home</a></li>
+                        <li class="nav-item"><a class="nav-link" asp-area="Admin" asp-controller="Product" asp-action="Index">Product</a></li>
+                        <li class="nav-item"><a class="nav-link" href="#">Service</a></li>
                         <li class="nav-item dropdown">
-                            <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                                Content Management
-                            </a>
+                            <a class="nav-link dropdown-toggle" href="#" data-bs-toggle="dropdown">Shop</a>
                             <ul class="dropdown-menu">
-                                <li class="nav-item">
-                                    <a class="dropdown-item" asp-area="Admin" asp-controller="Category" asp-action="Index">Category</a>
-                                </li>
-                                <li class="nav-item">
-                                    <a class="dropdown-item" asp-area="Admin" asp-controller="Product" asp-action="Index">Product</a>
-                                </li>
-                                <li><hr class="dropdown-divider"></li>
+                                <li><a class="dropdown-item" href="#">New Arrivals</a></li>
+                                <li><a class="dropdown-item" href="#">Best Sellers</a></li>
                             </ul>
                         </li>
+                        <li class="nav-item"><a class="nav-link" href="#">Pages</a></li>
+                        <li class="nav-item"><a class="nav-link" href="#">Blog</a></li>
+                        <li class="nav-item"><a class="nav-link" href="#">Contact Us</a></li>
                     </ul>
                 </div>
             </div>
         </nav>
     </header>
-    <div class="container">
+
+    <div class="">
+        @*here it was container as class by default *@
         <main role="main" class="pb-3">
             <partial name="_Notification" />  @*notification partial view*@
             @RenderBody()

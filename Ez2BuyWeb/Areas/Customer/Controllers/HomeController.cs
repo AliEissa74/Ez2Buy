@@ -1,3 +1,4 @@
+using Ez2Buy.DataAccess.Contracts;
 using Ez2Buy.DataAccess.Models;
 using Microsoft.AspNetCore.Mvc;
 using System.Diagnostics;
@@ -8,15 +9,26 @@ namespace Ez2BuyWeb.Areas.Customer.Controllers
     public class HomeController : Controller
     {
         private readonly ILogger<HomeController> _logger;
-
-        public HomeController(ILogger<HomeController> logger)
+        private readonly IUnitOfWork _unitOfWork;
+        public HomeController(ILogger<HomeController> logger, IUnitOfWork unitOfWork)
         {
             _logger = logger;
+            _unitOfWork = unitOfWork;
         }
 
+        //get all products from database
         public IActionResult Index()
         {
-            return View();
+            IEnumerable<Product> productList = _unitOfWork.Product.GetAll(includeProperties: "Category");
+            return View(productList);
+        }
+
+        //single product details Page
+        public IActionResult Details(int ProductId)
+        {
+            Product product = _unitOfWork.Product.GetById(u => u.Id == ProductId, includeProperties: "Category");
+
+            return View(product);
         }
 
         public IActionResult Privacy()

@@ -27,6 +27,7 @@ namespace Ez2Buy.DataAccess.Repositories
 			_db.Add(model);
 		}
 
+		
 		public IEnumerable<T> GetAll(string? includePorperties = null)
 		{
 			IQueryable<T> query = dbSet;

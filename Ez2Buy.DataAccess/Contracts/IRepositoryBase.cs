@@ -7,15 +7,15 @@ using System.Threading.Tasks;
 
 namespace Ez2Buy.DataAccess.Contracts
 {
-	public interface IRepositoryBase<T> where T : class
-	{
-		//T - Category, Product, Order,etc
-		//we remove update method bec Different Update Strategies
-		IEnumerable<T> GetAll(string? includePorperties = null);
-		T GetById(Expression<Func<T,bool>> filter, string? includePorperties = null);
-		void Add(T model);
+    public interface IRepositoryBase<T> where T : class
+    {
+        //T - Category, Product, Order,etc
+        //we remove update method bec Different Update Strategies
+        IEnumerable<T> GetAll(string? includeProperties = null);
+        T GetById(Expression<Func<T, bool>> filter, string? includeProperties = null);
+        void Add(T model);
 
-		void Delete(T model);
-		void DeleteRange(IEnumerable<T> model);
-	}
+        void Delete(T model);
+        void DeleteRange(IEnumerable<T> model);
+    }
 }
