@@ -1,1 +1,1 @@
-# EZ2Buy
+# Ez2Buy
