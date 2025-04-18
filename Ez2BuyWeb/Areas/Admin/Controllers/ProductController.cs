@@ -3,7 +3,9 @@ using Ez2Buy.DataAccess.Data;
 using Ez2Buy.DataAccess.Models;
 using Ez2Buy.Services.Contracts;
 using Ez2Buy.Services.Services;
+using Ez2Buy.Utility;
 using Ez2BuyWeb.ViewModels;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using System.Collections.Generic;
@@ -11,6 +13,7 @@ using System.Collections.Generic;
 namespace Ez2BuyWeb.Areas.Admin.Controllers
 {
     [Area("Admin")]
+    [Authorize(Roles = SD.Role_Admin)]
     public class ProductController : Controller
     {
         private readonly IUnitOfWork _unitOfWork;

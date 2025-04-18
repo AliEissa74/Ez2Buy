@@ -4,6 +4,9 @@ using Ez2Buy.DataAccess.Repositories;
 using Ez2Buy.Services.Contracts;
 using Ez2Buy.Services.Services;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Identity.UI.Services;
+using Ez2Buy.Utility;
 
 namespace Ez2BuyWeb
 {
@@ -18,11 +21,26 @@ namespace Ez2BuyWeb
 			//retrive the connection string from appsettings.json
 			builder.Services.AddDbContext<ApplicationDbContext>(options =>
                 options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
-            //register the repository
-            builder.Services.AddScoped<IUnitOfWork,UnitOfWork>();
 
-			// Register Services
-			builder.Services.AddScoped<IProductService, ProductService>();
+
+            builder.Services.AddIdentity<IdentityUser,IdentityRole>().AddEntityFrameworkStores<ApplicationDbContext>().AddDefaultTokenProviders();
+
+            // handle identity to go to right paths if user is not logged in
+            builder.Services.ConfigureApplicationCookie(options =>
+            {
+                options.LoginPath = $"/Identity/Account/Login";
+                options.LogoutPath = $"/Identity/Account/Logout";
+                options.AccessDeniedPath = $"/Identity/Account/AccessDenied";
+            });
+
+            builder.Services.AddRazorPages();
+			//register the repository
+			builder.Services.AddScoped<IUnitOfWork,UnitOfWork>();
+            //register the email sender
+            builder.Services.AddScoped<IEmailSender, EmailSender>();
+
+            // Register Services
+            builder.Services.AddScoped<IProductService, ProductService>();
 			builder.Services.AddScoped<ICategoryService, CategoryService>();
 
 
@@ -41,8 +59,9 @@ namespace Ez2BuyWeb
             app.UseStaticFiles();
 
             app.UseRouting();
-
-            app.UseAuthorization();
+            app.UseAuthentication();
+			app.UseAuthorization();
+            app.MapRazorPages();
 
             app.MapControllerRoute(
                 name: "default",

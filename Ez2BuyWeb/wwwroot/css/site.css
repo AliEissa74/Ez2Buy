@@ -537,6 +537,17 @@ bg-success {
     }
 
 
+.divider-text:before,
+.divider-text:after {
+    color:white;
+    content:"";
+    flex:1;
+    border-bottom:1px solid #555;
+    margin:auto 0.25rem;
+    box-shadow: 0 -2px;
+}
+
+
 /* my css styling */
 /*code for bottom line to section title*/
 .section-title h2 {
@@ -544,17 +555,17 @@ bg-success {
     padding-bottom: 10px;
 }
 
-    .section-title h2::before {
-        position: absolute;
-        left: 50%;
-        bottom: 0;
-        content: "";
-        background-color: #C6883A;
-        height: 2px;
-        width: 50px;
-        margin-left: -25px;
-        border-radius: 2px;
-    }
+.section-title h2::before {
+    position: absolute;
+    left: 50%;
+    bottom: 0;
+    content: "";
+    background-color: #C6883A;
+    height: 2px;
+    width: 50px;
+    margin-left: -25px;
+    border-radius: 2px;
+}
 
 
 /*its div that has product image*/
@@ -575,3 +586,13 @@ bg-success {
         max-height: 100%;
         object-fit: cover; /* Makes sure the image fills the area without stretching */
     }
+
+
+.dropdown-menu a {
+    /*    font-size: 14px !important;*/
+    text-transform: capitalize !important;
+}
+/*class if you want to add margin bottom*/
+.card-margin {
+    margin-bottom: 80px;
+}

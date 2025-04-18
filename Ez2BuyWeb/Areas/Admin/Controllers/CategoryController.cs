@@ -1,11 +1,14 @@
 ﻿using Ez2Buy.DataAccess.Contracts;
 using Ez2Buy.DataAccess.Data;
 using Ez2Buy.DataAccess.Models;
+using Ez2Buy.Utility;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Ez2BuyWeb.Areas.Admin.Controllers
 {
     [Area("Admin")]
+    [Authorize(Roles = SD.Role_Admin)]
     public class CategoryController : Controller
     {
         private readonly IUnitOfWork _unitOfWork;

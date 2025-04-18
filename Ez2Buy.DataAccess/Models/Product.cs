@@ -17,7 +17,7 @@ namespace Ez2Buy.DataAccess.Models
         [Required]
         [DisplayName("Product Name")]
         public string Name { get; set; }
-        public string Description { get; set; }
+        public string? Description { get; set; }
         [Required]
         [DisplayName("List Price")]
         [Range(1, 200000, ErrorMessage = "Price must be between 1 and 200000.")]
@@ -27,12 +27,12 @@ namespace Ez2Buy.DataAccess.Models
         [Range(1, 200000, ErrorMessage = "Price must be between 1 and 200000.")]
         public Double Price { get; set; } //selling price
 		[ValidateNever]
-		public string ImageUrl { get; set; }
+		public string? ImageUrl { get; set; }
 
         public int CategoryId { get; set; }
         [ForeignKey("CategoryId")]
         [ValidateNever]
-        public Category Category { get; set; }
+        public Category? Category { get; set; }
 
 
     }
