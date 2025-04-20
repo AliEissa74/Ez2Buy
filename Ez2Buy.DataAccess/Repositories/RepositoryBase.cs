@@ -4,6 +4,7 @@ using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Linq.Expressions;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -27,22 +28,27 @@ namespace Ez2Buy.DataAccess.Repositories
 			_db.Add(model);
 		}
 
-		
-		public IEnumerable<T> GetAll(string? includePorperties = null)
+        //this is used to add the model to the database
+        public IEnumerable<T> GetAll(Expression<Func<T, bool>>? filter, string? includeProperties = null)
 		{
-			IQueryable<T> query = dbSet;
-			if (!string.IsNullOrEmpty(includePorperties))
-			{
-				foreach (var includeProp in includePorperties
-					.Split(new char[] { ',' }, StringSplitOptions.RemoveEmptyEntries))
-				{
-					query = query.Include(includeProp);
-				}
-			}
-			return query.ToList();
-		}
+            IQueryable<T> query = dbSet;
+            if (filter != null)
+            {
+                query = query.Where(filter);
+            }
+            if (!string.IsNullOrEmpty(includeProperties))
+            {
+                foreach (var includeProp in includeProperties
+                    .Split(new char[] { ',' }, StringSplitOptions.RemoveEmptyEntries))
+                {
+                    query = query.Include(includeProp);
+                }
+            }
+            return query.ToList();
+        }
 
-		public T GetById(System.Linq.Expressions.Expression<Func<T, bool>> filter, string? includePorperties = null)
+        //this is used to get the model by id
+        public T GetById(System.Linq.Expressions.Expression<Func<T, bool>> filter, string? includePorperties = null)
 		{
 			IQueryable<T> query = dbSet;
 			query = query.Where(filter);
@@ -66,6 +72,30 @@ namespace Ez2Buy.DataAccess.Repositories
 		{
 			dbSet.RemoveRange(model);
 		}
+        //this is used to get the first or default value of the model
+        public T Get(Expression<Func<T, bool>> filter, string? includeProperties = null, bool tracked = false)
+        {
+            IQueryable<T> query;
+            if (tracked)
+            {
+                query = dbSet;
 
-	}
+            }
+            else
+            {
+                query = dbSet.AsNoTracking();
+            }
+
+            query = query.Where(filter);
+            if (!string.IsNullOrEmpty(includeProperties))
+            {
+                foreach (var includeProp in includeProperties
+                    .Split(new char[] { ',' }, StringSplitOptions.RemoveEmptyEntries))
+                {
+                    query = query.Include(includeProp);
+                }
+            }
+            return query.FirstOrDefault();
+        }
+    }
 }

@@ -14,11 +14,12 @@ namespace Ez2Buy.DataAccess.Data
 
         public DbSet<Category>  Categories { get; set; }
         public DbSet<Product> Products { get; set; }
+        public DbSet<ShoppingCart> ShoppingCarts { get; set; }
 		public DbSet<AppUser> AppUsers { get; set; }
 
 
-		//this method is used to seed the database with initial data
-		protected override void OnModelCreating(ModelBuilder modelBuilder)
+        //this method is used to seed the database with initial data
+        protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             base.OnModelCreating(modelBuilder);
 

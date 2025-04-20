@@ -10,6 +10,8 @@ namespace Ez2Buy.DataAccess.Contracts
 	{
 		ICategoryRepository Category { get; }
         IProductRepository Product { get; }
+        IShoppingCartRepository ShoppingCart { get; }
+        IAppUserRepository AppUser { get; }
         void Save();
 	}
 }

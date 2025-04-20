@@ -15,11 +15,17 @@ namespace Ez2Buy.DataAccess.Repositories
 
         public IProductRepository Product { get; private set; }
 
+        public IShoppingCartRepository ShoppingCart { get; private set; }
+
+        public IAppUserRepository AppUser { get; private set; }
+
         public UnitOfWork(ApplicationDbContext db)
 		{
 			_db = db;
 			Category = new CategoryRepository(_db);
             Product = new ProductRepository(_db);
+            ShoppingCart = new ShoppingCartRepository(_db);
+            AppUser = new AppUserRepository(_db);
         }
 
 		public void Save()

@@ -158,7 +158,12 @@
                                                 <p class="text-dark opacity-75 text-decoration-line-through" style="font-size:14px;"><span>@product.ListPrice.ToString("c")</span></p>
 
                                             </div>
-                                            <a href="#" class="btn btn-primary form-control">Add to Cart</a>
+                                            @* if iwant to make btn add to cart uncomment and uncomment addtocart incontroller *@
+@*                                             <form asp-action="AddToCart" method="post" class="d-grid">
+                                                <input type="hidden" name="productId" value="@product.Id" />
+                                                <button type="submit" class="btn btn-primary form-control">Add to Cart</button>
+                                            </form> *@
+                                            <a asp-action="Details" asp-route-ProductId="@product.Id" class="btn btn-primary form-control">Details</a>
 
                                         </div>
                                     </div>
