@@ -16,6 +16,8 @@ namespace Ez2Buy.DataAccess.Data
         public DbSet<Product> Products { get; set; }
         public DbSet<ShoppingCart> ShoppingCarts { get; set; }
 		public DbSet<AppUser> AppUsers { get; set; }
+        public DbSet<OrderHeader> OrderHeaders { get; set; }
+        public DbSet<OrderDetail> OrderDetails { get; set; }
 
 
         //this method is used to seed the database with initial data

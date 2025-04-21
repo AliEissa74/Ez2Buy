@@ -59,7 +59,7 @@ namespace Ez2BuyWeb.Areas.Customer.Controllers
                 //add the new cart
                 _unitOfWork.ShoppingCart.Add(shoppingCart); //Add the shopping cart to the database
 
-                TempData["success"] = "Product added to cart"; 
+                TempData["success"] = "Product added to Cart"; 
             }
             _unitOfWork.Save();
             return RedirectToAction(nameof(Index)); //Redirect to the index page

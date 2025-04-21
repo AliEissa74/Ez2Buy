@@ -7,6 +7,7 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.UI.Services;
 using Ez2Buy.Utility;
+using Stripe;
 
 namespace Ez2BuyWeb
 {
@@ -22,8 +23,10 @@ namespace Ez2BuyWeb
 			builder.Services.AddDbContext<ApplicationDbContext>(options =>
                 options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
 
+			//inject the stripe settings
+			builder.Services.Configure<StripeSettings>(builder.Configuration.GetSection("Stripe"));
 
-            builder.Services.AddIdentity<IdentityUser,IdentityRole>().AddEntityFrameworkStores<ApplicationDbContext>().AddDefaultTokenProviders();
+			builder.Services.AddIdentity<IdentityUser,IdentityRole>().AddEntityFrameworkStores<ApplicationDbContext>().AddDefaultTokenProviders();
 
             // handle identity to go to right paths if user is not logged in
             builder.Services.ConfigureApplicationCookie(options =>
@@ -40,8 +43,7 @@ namespace Ez2BuyWeb
             builder.Services.AddScoped<IEmailSender, EmailSender>();
 
             // Register Services
-            builder.Services.AddScoped<IProductService, ProductService>();
-			builder.Services.AddScoped<ICategoryService, CategoryService>();
+
 
 
 
@@ -57,8 +59,8 @@ namespace Ez2BuyWeb
 
             app.UseHttpsRedirection();
             app.UseStaticFiles();
-
-            app.UseRouting();
+            StripeConfiguration.ApiKey = builder.Configuration.GetSection("Stripe:SecretKey").Get<string>();
+			app.UseRouting();
             app.UseAuthentication();
 			app.UseAuthorization();
             app.MapRazorPages();
