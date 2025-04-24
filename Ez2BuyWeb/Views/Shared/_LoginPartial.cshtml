@@ -28,7 +28,7 @@
                 @if (User.IsInRole(SD.Role_Customer))
                 {
                     <li><a class="dropdown-item text-dark fs-6 fw-normal" asp-area="Identity" asp-page="/Account/Manage/Index"><i class="bi bi-person-circle fs-5 me-2 text-warning"></i>Profile</a></li>
-                    <li><a class="dropdown-item text-dark fs-6 fw-normal" asp-area="Customer" asp-controller="Order" asp-action="Index"><i class="bi bi-receipt fs-5 me-2 text-warning"></i>Orders</a></li>
+                    <li><a class="dropdown-item text-dark fs-6 fw-normal" asp-area="Admin" asp-controller="Order" asp-action="Index"><i class="bi bi-receipt fs-5 me-2 text-warning"></i>Orders</a></li>
                     <li><hr class="dropdown-divider"></li>
                 }
                 @if (User.IsInRole(SD.Role_Admin))
@@ -36,7 +36,7 @@
                     <li><a class="dropdown-item text-dark fs-6 fw-normal" asp-area="Customer" asp-controller="Home" asp-action="Index"><i class="bi bi-speedometer2 fs-5 me-2 text-warning"></i>Dashboard</a></li>
                     <li><a class="dropdown-item text-dark fs-6 fw-normal" asp-area="Admin" asp-controller="Category" asp-action="Index"><i class="bi bi-collection fs-5 me-2 text-warning"></i>Category</a></li>
                     <li><a class="dropdown-item text-dark fs-6 fw-normal" asp-area="Admin" asp-controller="Product" asp-action="Index"><i class="bi bi-box-seam fs-5 me-2 text-warning"></i>Product</a></li>
-                    <li><a class="dropdown-item text-dark fs-6 fw-normal" asp-area="Admin" asp-controller="Order" asp-action="Index"><i class="bi bi-receipt fs-5 me-2 text-warning"></i>Orders</a></li>
+                    <li><a class="dropdown-item text-dark fs-6 fw-normal" asp-area="Admin" asp-controller="Order" asp-action="Index"><i class="bi bi-receipt fs-5 me-2 text-warning"></i>Manage Order</a></li>
                     <li><a class="dropdown-item text-dark fs-6 fw-normal" asp-area="Identity" asp-page="/Account/Manage/Index"><i class="bi bi-person-circle fs-5 me-2 text-warning"></i>Profile</a></li>
                     <li><hr class="dropdown-divider"></li>
                 }

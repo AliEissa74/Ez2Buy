@@ -15,8 +15,8 @@ namespace Ez2Buy.Services.DTOs.Product
         public int Id { get; set; }
         public string Name { get; set; }
         public string Description { get; set; }
-        public double ListPrice { get; set; }  //original price
-        public double Price { get; set; } //selling price
+        public decimal ListPrice { get; set; }  //original price
+        public decimal Price { get; set; } //selling price
         public string ImageUrl { get; set; }
         public int CategoryId { get; set; }
     }

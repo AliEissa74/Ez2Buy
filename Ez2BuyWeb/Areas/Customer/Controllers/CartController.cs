@@ -119,7 +119,7 @@ namespace Ez2BuyWeb.Areas.Customer.Controllers
 				_unitOfWork.OrderDetail.Add(orderDetail);
 				_unitOfWork.Save();
 			}
-
+            //stripe logic
 			var domain = Request.Scheme + "://" + Request.Host.Value + "/";  //This line builds the base URL of your website dynamically
                                                                              //Example result: https://Ez2Buy.com/
 			var options = new SessionCreateOptions

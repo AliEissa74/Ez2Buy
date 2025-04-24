@@ -21,11 +21,11 @@ namespace Ez2Buy.DataAccess.Models
         [Required]
         [DisplayName("List Price")]
         [Range(1, 200000, ErrorMessage = "Price must be between 1 and 200000.")]
-        public Double ListPrice { get; set; }  //original price
+        public decimal ListPrice { get; set; }  //original price
 
         [Required]
         [Range(1, 200000, ErrorMessage = "Price must be between 1 and 200000.")]
-        public Double Price { get; set; } //selling price
+        public decimal Price { get; set; } //selling price
 		[ValidateNever]
 		public string? ImageUrl { get; set; }
 

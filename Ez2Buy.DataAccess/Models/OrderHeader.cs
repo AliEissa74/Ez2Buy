@@ -21,7 +21,7 @@ namespace Ez2Buy.DataAccess.Models
 
         public DateTime OrderDate { get; set; }
         public DateTime ShippingDate { get; set; }
-        public double OrderTotal { get; set; }
+        public decimal OrderTotal { get; set; }
 
         public string? OrderStatus { get; set; } //pending, approved, shipped, delivered, cancelled
         public string? PaymentStatus { get; set; } //pending, approved, declined

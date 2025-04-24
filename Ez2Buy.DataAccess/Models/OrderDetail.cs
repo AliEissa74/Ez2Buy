@@ -26,7 +26,7 @@ namespace Ez2Buy.DataAccess.Models
         public Product Product { get; set; } 
 
         public int Quantity { get; set; }
-        public double Price { get; set; } //price of the product at the time of order won't change later with the changes of the product prices
+        public decimal Price { get; set; } //price of the product at the time of order won't change later with the changes of the product prices
 
 
 

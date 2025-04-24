@@ -596,3 +596,11 @@ bg-success {
 .card-margin {
     margin-bottom: 80px;
 }
+
+/*this for datatable align*/
+.datatbl th {
+    text-align: left !important;
+}
+.datatbl td {
+    text-align: left !important;
+}

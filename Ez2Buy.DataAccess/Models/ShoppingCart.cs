@@ -27,7 +27,7 @@ namespace Ez2Buy.DataAccess.Models
         public AppUser AppUser { get; set; }
 
         [NotMapped]                     //this property is NotMapped to the database( temporary data not stored in the database)
-        public double Price { get; set; } //price of the product in the cart
+        public decimal Price { get; set; } //price of the product in the cart
 
     }
 }
