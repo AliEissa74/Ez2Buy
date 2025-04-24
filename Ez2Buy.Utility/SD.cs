@@ -25,5 +25,7 @@ namespace Ez2Buy.Utility
 		public const string PaymentStatusApproved = "Approved";
 		public const string PaymentStatusRejected = "Rejected";
 
-	}
+
+		public const string SessionCart = "SessionShoppingCart"; //this is to access the session in the controller
+    }
 }

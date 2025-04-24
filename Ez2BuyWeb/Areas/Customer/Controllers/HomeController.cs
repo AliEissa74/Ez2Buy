@@ -1,5 +1,6 @@
 using Ez2Buy.DataAccess.Contracts;
 using Ez2Buy.DataAccess.Models;
+using Ez2Buy.Utility;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using System.Diagnostics;
@@ -21,6 +22,7 @@ namespace Ez2BuyWeb.Areas.Customer.Controllers
         //get all products from database
         public IActionResult Index()
         {
+           
             IEnumerable<Product> productList = _unitOfWork.Product.GetAll(includeProperties: "Category");
             return View(productList);
         }
@@ -58,10 +60,13 @@ namespace Ez2BuyWeb.Areas.Customer.Controllers
             {
                 //add the new cart
                 _unitOfWork.ShoppingCart.Add(shoppingCart); //Add the shopping cart to the database
+                _unitOfWork.Save();
+                HttpContext.Session.SetInt32(SD.SessionCart, _unitOfWork.ShoppingCart.
+                    GetAll(u => u.AppUserId == userId).Count()); //Set cart count value in the session
 
                 TempData["success"] = "Product added to Cart"; 
             }
-            _unitOfWork.Save();
+
             return RedirectToAction(nameof(Index)); //Redirect to the index page
         }
 

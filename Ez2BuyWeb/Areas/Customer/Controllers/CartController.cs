@@ -184,7 +184,7 @@ namespace Ez2BuyWeb.Areas.Customer.Controllers
 				OrderHeader = orderHeader,
 				shoppingCartList = orderDetails
 			};
-
+            HttpContext.Session.Clear();
             List<ShoppingCart> shoppingCarts = _unitOfWork.ShoppingCart
 				.GetAll(u => u.AppUserId == orderHeader.AppUserId).ToList();
 			_unitOfWork.ShoppingCart.DeleteRange(shoppingCarts);
@@ -203,10 +203,12 @@ namespace Ez2BuyWeb.Areas.Customer.Controllers
 
         public IActionResult Minus(int cartId)
         {
-            var cartFromDb = _unitOfWork.ShoppingCart.Get(u => u.Id == cartId);
+            var cartFromDb = _unitOfWork.ShoppingCart.Get(u => u.Id == cartId, tracked: true);
             if (cartFromDb.Quantity <= 1)
             {
                 //remove from Cart
+                HttpContext.Session.SetInt32(SD.SessionCart, _unitOfWork.ShoppingCart
+                   .GetAll(u => u.AppUserId == cartFromDb.AppUserId).Count() - 1);
                 _unitOfWork.ShoppingCart.Delete(cartFromDb);
             }
             else
@@ -220,9 +222,11 @@ namespace Ez2BuyWeb.Areas.Customer.Controllers
 
         public IActionResult Remove(int cartId)
         {
-            var cartFromDb = _unitOfWork.ShoppingCart.Get(u => u.Id == cartId);
+            var cartFromDb = _unitOfWork.ShoppingCart.Get(u => u.Id == cartId, tracked:true);
             if (cartFromDb != null)
             {
+                HttpContext.Session.SetInt32(SD.SessionCart, _unitOfWork.ShoppingCart
+                    .GetAll(u => u.AppUserId == cartFromDb.AppUserId).Count() - 1);
                 _unitOfWork.ShoppingCart.Delete(cartFromDb);
                 _unitOfWork.Save();
             }

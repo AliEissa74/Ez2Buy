@@ -37,6 +37,7 @@
                     <li><a class="dropdown-item text-dark fs-6 fw-normal" asp-area="Admin" asp-controller="Category" asp-action="Index"><i class="bi bi-collection fs-5 me-2 text-warning"></i>Category</a></li>
                     <li><a class="dropdown-item text-dark fs-6 fw-normal" asp-area="Admin" asp-controller="Product" asp-action="Index"><i class="bi bi-box-seam fs-5 me-2 text-warning"></i>Product</a></li>
                     <li><a class="dropdown-item text-dark fs-6 fw-normal" asp-area="Admin" asp-controller="Order" asp-action="Index"><i class="bi bi-receipt fs-5 me-2 text-warning"></i>Manage Order</a></li>
+                    <li><a class="dropdown-item text-dark fs-6 fw-normal" asp-area="Identity" asp-page="/Account/Register"><i class="bi bi-person-add fs-5 me-2 text-warning"></i>Create User</a></li>
                     <li><a class="dropdown-item text-dark fs-6 fw-normal" asp-area="Identity" asp-page="/Account/Manage/Index"><i class="bi bi-person-circle fs-5 me-2 text-warning"></i>Profile</a></li>
                     <li><hr class="dropdown-divider"></li>
                 }
@@ -62,7 +63,7 @@ else
         <a class="btn d-flex align-items-center me-1" id="register" asp-area="Identity" asp-page="/Account/Register"> <i class="bi bi-person fs-5 pr-2"></i>Register</a>
 
 
-        <a class="btn btn-outline-dark d-flex align-items-center me-2" style="font-size:17px;" id="login" asp-area="Identity" asp-page="/Account/Login"><i class="bi bi-person fs-4 pr-2 me-1"></i>Login</a>
+        <a class="btn btn-outline-dark d-flex align-items-center " style="font-size:17px;" id="login" asp-area="Identity" asp-page="/Account/Login"><i class="bi bi-person fs-4 pr-2 me-1"></i>Login</a>
 
     
 }

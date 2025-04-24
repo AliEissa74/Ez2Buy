@@ -36,6 +36,20 @@ namespace Ez2BuyWeb
                 options.AccessDeniedPath = $"/Identity/Account/AccessDenied";
             });
 
+            //add authentication for faceook,etc
+            builder.Services.AddAuthentication().AddFacebook(option => {
+                option.AppId = "527508283572891";
+                option.AppSecret = "45dc4bff335d44a644d207ed550bc692";
+            });
+
+            //add the session
+            builder.Services.AddDistributedMemoryCache();
+            builder.Services.AddSession(options => {
+                options.IdleTimeout = TimeSpan.FromMinutes(100);  //set the session timeout if user is idle
+                options.Cookie.HttpOnly = true;                    //this is to prevent the cookie from being accessed by javascript
+                options.Cookie.IsEssential = true;                  //this is to make the session cookie essential(required) for the application
+            });
+
             builder.Services.AddRazorPages();
 			//register the repository
 			builder.Services.AddScoped<IUnitOfWork,UnitOfWork>();
@@ -63,6 +77,7 @@ namespace Ez2BuyWeb
 			app.UseRouting();
             app.UseAuthentication();
 			app.UseAuthorization();
+            app.UseSession(); 
             app.MapRazorPages();
 
             app.MapControllerRoute(

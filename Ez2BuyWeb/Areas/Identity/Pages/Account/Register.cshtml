@@ -10,7 +10,14 @@
         <div class="card-header bg-secondary bg-gradient ml-0 py-4">
             <div class="row">
                 <div class="col-12 text-center">
-                    <h2 class="py-2 text-white">@ViewData["Title"]</h2>
+                    @if (User.IsInRole(SD.Role_Admin))
+                    {
+                        <h2 class="py-2 text-white">Register - Admin Portal</h2>
+                    }
+                    else
+                    {   
+                    <h2 class="py-2 text-white">Register</h2>
+                    }
                 </div>
             </div>
         </div>
@@ -61,25 +68,32 @@
                             <label asp-for="Input.Governorate" class="ms-2 text-muted">Governorate</label>
                             <span asp-validation-for="Input.Governorate" class="text-danger"></span>
                         </div>
+                        @if(User.IsInRole(SD.Role_Admin))
+                        {
                         <div class="form-floating mb-3 col-md-6">
                             <select asp-for="Input.Role" asp-items="@Model.Input.RoleList" class="form-select">
                                 <option value="">-Select Role-</option>
                             </select>
                         </div>
+                        }
                         <div class="col-12">
                             <button id="registerSubmit" type="submit" class="w-100 btn btn-lg btn-primary fs-6 py-2">Register</button>
                         </div>
+                        @if (!User.IsInRole(SD.Role_Admin))
+                        { 
                         <div class="d-flex justify-content-between pt-2">
                             <p>
                                 <a asp-page="./Login">Already Have an account?</a>
                             </p>
                         </div>
+                        }
                     </form>
                 </div>
-                <div class="col-md-12">
+                @if (!User.IsInRole(SD.Role_Admin))
+                {               
+                <div class="col-md-12 p-3 text-center">
                     <section>
                         <p class="divider-text d-flex pt-2">or</p>
-                        <h3>Use another service to register.</h3>
                         @{
                             if ((Model.ExternalLogins?.Count ?? 0) == 0)
                             {
@@ -108,6 +122,7 @@
                         }
                     </section>
                 </div>
+                }
             </div>
 
         </div>

@@ -1,4 +1,7 @@
 ﻿
+@using Microsoft.AspNetCore.Http
+@inject IHttpContextAccessor HttpContextAccessor
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -60,10 +63,10 @@
                 @*             <i class="bi bi-headset text-info"></i> +060 (800) 801-582 |
                 <i class="bi bi-envelope"></i> Ez2Buy@example.com *@
             </div>
-            <div class="d-flex justify-content-center flex-grow-1">
-                <a href="#" class="text-decoration-none me-3 text-dark"><i class="bi bi-geo-alt"></i>Home</a>
-                <a href="#" class="text-decoration-none me-3"><i class="bi bi-clock"></i> AboutUs</a>
-                <a href="#" class="text-decoration-none me-3"><i class="bi bi-person"></i> My account</a>
+            <div class="d-flex justify-content-center flex-grow-1" style="font-size:15px;">
+                <a href="#" class="text-decoration-none me-3 text-dark fw-medium"><i class="bi bi-house text-warning"></i> Home</a>
+                <a href="#" class="text-decoration-none me-3 text-dark fw-medium"><i class="bi bi-box text-warning"></i> Products</a>
+                <a href="#" class="text-decoration-none me-3 text-dark fw-medium"><i class="bi bi-info-circle text-warning"></i> About</a>
                 @* <a href="#" class="text-decoration-none me-3"><i class="bi bi-box-arrow-in-right"></i> Login</a> *@
 
             </div>
@@ -103,12 +106,11 @@
                     <partial name="_LoginPartial"/>
                     @* <a href="#" class="text-dark me-3 fs-4"><i class="bi bi-person"></i></a> *@
                     <a href="#" class="text-dark mx-3 fs-5"><i class="bi bi-heart"></i></a>
-                    <a asp-area="Customer" asp-controller="Cart" asp-action="Index" class="text-dark position-relative">
-                        <i class="bi bi-cart fs-4"></i>
-                        <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-warning">
-                            0
-                        </span>
-                    </a>
+
+                     <a asp-area="Customer" asp-controller="Cart" asp-action="Index" class="text-dark position-relative">
+                         <i class="bi bi-cart fs-4"></i>
+                            @await Component.InvokeAsync("ShoppingCart")  @* This will call the ShoppingCart component that called ShoppingCart *@
+                     </a>
                 </div>
             </div>
         </nav>
