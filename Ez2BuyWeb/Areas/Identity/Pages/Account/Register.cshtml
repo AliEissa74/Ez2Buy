@@ -2,6 +2,37 @@
 @model RegisterModel
 @{
     ViewData["Title"] = "Register";
+    if (User.IsInRole("Admin"))
+    {
+        Layout = "~/Areas/Admin/Views/_DashboardLayout.cshtml"; // Admin layout
+    }
+    else
+    {
+        Layout = "_Layout"; // (default _layout)
+    }
+}
+
+@if (User.IsInRole("Admin"))
+{
+    <!--begin::App Content Header-->
+    <div class="app-content-header mt-3 mx-2">
+        <!--begin::Container-->
+        <div class="container-fluid">
+            <!--begin::Row-->
+            <div class="row">
+                <div class="col-sm-6"><h3 class="mb-0">Create User</h3></div>
+                <div class="col-sm-6">
+                    <ol class="breadcrumb float-sm-end">
+                        <li class="breadcrumb-item"><a asp-area="Admin" asp-controller="Dashboard" asp-action="Index">Dashboard</a></li>
+                        <li class="breadcrumb-item active" aria-current="page">Create User</li>
+                    </ol>
+                </div>
+            </div>
+            <!--end::Row-->
+        </div>
+        <!--end::Container-->
+    </div>
+    <!--end::App Content Header-->
 }
 
 <div class="container">
@@ -83,7 +114,7 @@
                         { 
                         <div class="d-flex justify-content-between pt-2">
                             <p>
-                                <a asp-page="./Login">Already Have an account?</a>
+                                    <a asp-page="./Login" class="text-secondary">Already Have an account?</a>
                             </p>
                         </div>
                         }

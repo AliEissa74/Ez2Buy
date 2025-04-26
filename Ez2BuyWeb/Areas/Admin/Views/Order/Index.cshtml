@@ -3,6 +3,14 @@
 
 @{
 	ViewData["title"] = "Manage Orders";
+	if (User.IsInRole("Admin") || User.IsInRole("Employee"))
+    {
+		Layout = "~/Areas/Admin/Views/_DashboardLayout.cshtml"; // Admin layout
+    }
+    else
+    {
+		Layout = "_Layout"; // (default _layout)
+    }
 }
 
 @* i added partial view for notification in _layout so we dont need to add it in each file *@
@@ -43,6 +51,26 @@
 	}
 }
 
+<!--begin::App Content Header-->
+<div class="app-content-header mt-3 mx-2">
+	<!--begin::Container-->
+	<div class="container-fluid">
+		<!--begin::Row-->
+		<div class="row">
+			<div class="col-sm-6"><h3 class="mb-0">Orders</h3></div>
+			<div class="col-sm-6">
+				<ol class="breadcrumb float-sm-end">
+					<li class="breadcrumb-item"><a asp-area="Admin" asp-controller="Dashboard" asp-action="Index">Dashboard</a></li>
+					<li class="breadcrumb-item active" aria-current="page">Orders</li>
+				</ol>
+			</div>
+		</div>
+		<!--end::Row-->
+	</div>
+	<!--end::Container-->
+</div>
+<!--end::App Content Header-->
+
 <div class="container">
 	<div class="card shadow border-0 mt-4 card-margin">
 		<div class="card-header bg-secondary bg-gradient ml-0 py-3">
@@ -57,7 +85,7 @@
 				<span></span>
 				<ul class="list-group list-group-horizontal-sm">
 					<a style="text-decoration:none;" asp-controller="Order" asp-action="Index" asp-route-status="inprocess">
-						<li class="list-group-item @inprocess">In Process</li>
+					<li class="list-group-item @inprocess">In Process</li>
 					</a>
 
 					<a style="text-decoration:none;" asp-controller="Order" asp-action="Index" asp-route-status="pending">

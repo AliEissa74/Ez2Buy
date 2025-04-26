@@ -8,8 +8,8 @@ using Microsoft.AspNetCore.Mvc;
 namespace Ez2BuyWeb.Areas.Admin.Controllers
 {
     [Area("Admin")]
-    [Authorize(Roles = SD.Role_Admin)]
-    public class CategoryController : Controller
+	[Authorize(Roles = SD.Role_Admin + "," + SD.Role_Employee)]
+	public class CategoryController : Controller
     {
         private readonly IUnitOfWork _unitOfWork;
         public CategoryController(IUnitOfWork unitOfWork)

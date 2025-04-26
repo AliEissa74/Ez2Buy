@@ -1,9 +1,31 @@
 ﻿@model IEnumerable<Ez2Buy.DataAccess.Models.Category>
 @{
-	ViewData["title"] = "Category Page";
+	ViewData["title"] = "Categories Page";
+	Layout = "~/Areas/Admin/Views/_DashboardLayout.cshtml";
 }
 
 @* i added partial view for notification in _layout so we dont need to add it in each file *@
+
+<!--begin::App Content Header-->
+<div class="app-content-header mt-3 mx-2">
+	<!--begin::Container-->
+	<div class="container-fluid">
+		<!--begin::Row-->
+		<div class="row">
+			<div class="col-sm-6"><h3 class="mb-0">Categories</h3></div>
+			<div class="col-sm-6">
+				<ol class="breadcrumb float-sm-end">
+					<li class="breadcrumb-item"><a asp-area="Admin" asp-controller="Dashboard" asp-action="Index">Dashboard</a></li>
+					<li class="breadcrumb-item active" aria-current="page">Categories</li>
+				</ol>
+			</div>
+		</div>
+		<!--end::Row-->
+	</div>
+	<!--end::Container-->
+</div>
+<!--end::App Content Header-->
+
 
 <div class="container">
 <div class="card shadow border-0 mt-4">

@@ -13,8 +13,8 @@ using System.Collections.Generic;
 namespace Ez2BuyWeb.Areas.Admin.Controllers
 {
     [Area("Admin")]
-    [Authorize(Roles = SD.Role_Admin)]
-    public class ProductController : Controller
+	[Authorize(Roles = SD.Role_Admin + "," + SD.Role_Employee)]
+	public class ProductController : Controller
     {
         private readonly IUnitOfWork _unitOfWork;
         private readonly IWebHostEnvironment _WebhostEnvironment; //this to access folder inside wwwroot (images)

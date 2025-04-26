@@ -31,9 +31,9 @@
                         </div>
                         <div class="row ps-2">
                             <h6 class="text-dark text-opacity-50  pb-2">
-                                List Price:
+                                Original Price:
                                 <span class="text-decoration-line-through">
-                                    @Model.Product.ListPrice
+                                    @Model.Product.ListPrice.ToString("c")
                                 </span>
                             </h6>
                         </div>
@@ -45,11 +45,11 @@
                                 <div class="text-dark text-opacity-50 fw-semibold">1</div>
                         </div>
                         <div class="row text-center ps-2">
-                            <div class="p-1 col-3 col-lg-2 bg-white text-warning fw-bold">
+                            <div class="p-1 col-3 col-lg-2 bg-white text-secondary fw-bold">
                                 <div>Price</div>
                             </div>
-                            <div class="p-1 col-3 col-lg-2 bg-white text-warning fw-bold">
-                                    <div>@Model.Product.Price</div>
+                                <div class="p-1 col-3 col-lg-2 bg-white text-secondary fw-bold">
+                                    <div>@Model.Product.Price.ToString("c")</div>
                         </div>
                         <div class="row pl-2 my-3">
                                     <p class="text-secondary lh-sm">@Html.Raw(Model.Product.Description)</p>

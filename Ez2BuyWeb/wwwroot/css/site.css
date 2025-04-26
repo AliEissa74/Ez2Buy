@@ -55,15 +55,15 @@ html {
 }
 
 .text-warning {
-    color: #BD7418 !important;
+    color: #ffc107 !important;
 }
 
 .text-secondary {
-    color: #425F4B !important;
+    color: #BD7418 !important;
 }
 
 .text-primary {
-    color: #192E2F !important;
+    color: #3E3F3A !important;
 }
 
 .text-success {
@@ -75,7 +75,7 @@ html {
 }
 
 .bg-secondary {
-    background-color: #3A595C !important;
+    background-color: #BD7418 !important;
 }
 
 bg-success {
@@ -85,7 +85,7 @@ bg-success {
 
 
 .card {
-    border-color: #425F4B !important;
+    border-color: #BD7418 !important;
 }
 
 
@@ -182,16 +182,16 @@ bg-success {
 
 
 .btn-outline-secondary {
-    color: #134b5f;
-    border-color: #134b5f;
+    color: #3E3F3A;
+    border-color: #3E3F3A;
 }
 
 
 
     .btn-outline-secondary:hover {
         color: #fff;
-        background-color: #134b5f;
-        border-color: #134b5f;
+        background-color: #3E3F3A;
+        border-color: #3E3F3A;
     }
 
 
@@ -232,24 +232,24 @@ bg-success {
 
 .btn-primary {
     color: #fff;
-    background-color: #192E2F;
-    border-color: #192E2F;
+    background-color: #3E3F3A;
+    border-color: #3E3F3A;
 }
 
 
 
     .btn-primary:hover {
         color: #fff;
-        background-color: #445f5e;
-        border-color: #445f5e;
+        background-color: #595A54;
+        border-color: #595A54;
     }
 
 
 
     .btn-check:focus + .btn-primary, .btn-primary:focus {
         color: #fff;
-        background-color: #445f5e;
-        border-color: #445f5e;
+        background-color: #595A54;
+        border-color: #595A54;
         box-shadow: 0 0 0 0.25rem rgba(60, 60, 60, 0.5);
     }
 
@@ -335,24 +335,24 @@ bg-success {
 
 .btn-secondary {
     color: #fff;
-    background-color: #134b5f;
-    border-color: #134b5f;
+    background-color: #BD7418;
+    border-color: #BD7418;
 }
 
 
 
     .btn-secondary:hover {
         color: #fff;
-        background-color: #1a6985;
-        border-color: #1a6985;
+        background-color: #D4831C;
+        border-color: #D4831C;
     }
 
 
 
     .btn-check:focus + .btn-secondary, .btn-secondary:focus {
         color: #fff;
-        background-color: #1a6985;
-        border-color: #1a6985;
+        background-color: #D4831C;
+        border-color: #D4831C;
         box-shadow: 0 0 0 0.25rem rgba(60, 60, 60, 0.5);
     }
 
@@ -548,6 +548,20 @@ bg-success {
 }
 
 
+/* bachground colors */
+.bg-primary {
+    background-color: #3E3F3A !important;
+}
+
+.bg-dark {
+    background-color: #3E3F3A !important;
+}
+
+.list-group-item.active {
+    border:none !important; 
+}
+
+
 /* my css styling */
 /*code for bottom line to section title*/
 .section-title h2 {
@@ -594,7 +608,7 @@ bg-success {
 }
 /*class if you want to add margin bottom*/
 .card-margin {
-    margin-bottom: 80px;
+    margin-bottom: 100px;
 }
 
 /*this for datatable align*/
@@ -603,4 +617,11 @@ bg-success {
 }
 .datatbl td {
     text-align: left !important;
+}
+
+
+.btn-no-focus:focus,
+.btn-no-focus:active {
+    outline: none !important;
+    box-shadow: none !important;
 }
