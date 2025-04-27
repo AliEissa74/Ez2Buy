@@ -121,6 +121,12 @@
 						role="menu"
 						data-accordion="false">
 						<li class="nav-item">
+							<a asp-area="Customer" asp-controller="Home" asp-action="Index" class="nav-link @(IsActiveController("Home") ? "active" : "")">
+							    <i class="bi bi-house-door-fill me-2"></i>
+								<p>Go to Website</p>
+							</a>
+						</li>
+						<li class="nav-item">
 							<a asp-area="Admin" asp-controller="Dashboard" asp-action="Index" class="nav-link @(IsActiveController("Dashboard") ? "active" : "")">
 								<i class="nav-icon bi bi-speedometer"></i>
 								<p>Dashboard</p>
@@ -146,6 +152,12 @@
 						</li>
 						@if (User.IsInRole(SD.Role_Admin))
 						{
+							<li class="nav-item">
+								<a asp-area="Admin" asp-controller="User" asp-action="Index" class="nav-link @(IsActivePage("User") ? "active" : "")">
+									<i class="nav-icon bi bi-person-plus"></i>
+									<p>Manage User</p>
+								</a>
+							</li>
 							<li class="nav-item">
 								<a asp-area="Identity" asp-page="/Account/Register" class="nav-link @(IsActivePage("/Account/Register") ? "active" : "")">
 									<i class="nav-icon bi bi-person-plus"></i>
@@ -174,7 +186,7 @@
 	<!--begin::Footer-->
 	<footer class="main-footer border-top footer text-muted bg-white">
 		<div class="container text-center text-dark">
-			© 2025 - Ez2BuyWeb
+			© 2025 Ez2Buy Admin Portal 
 		</div>
 	</footer>
 	<!--end::Footer-->
@@ -188,6 +200,7 @@
 	<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 	<script src="//cdn.datatables.net/2.2.2/js/dataTables.min.js" asp-append-version="true"></script>
 	<script src="https://cdn.tiny.cloud/1/j6c86iaanxwbcyrwvru23zkqj3lklc70a55pa7zm5zbvu021/tinymce/7/tinymce.min.js" referrerpolicy="origin"></script>
+	<script src="//cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/js/toastr.min.js"></script>
 	@await RenderSectionAsync("Scripts", required: false)
 </body>
 </html>

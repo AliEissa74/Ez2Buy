@@ -40,7 +40,7 @@
             <div class="col-lg-8 col-md-12 text-center text-lg-start mb-3 mb-lg-0">
                 <h1 class="display-5 fw-bold text-dark flex-wrap">Discover the Latest Fashion Trends</h1>
                 <p class="lead text-muted mb-4">Shop high-quality clothing, accessories, and more at unbeatable prices. Elevate your style today!</p>
-                <a href="#" class="btn btn-primary btn-lg rounded-3">Shop Now <i class="bi bi-arrow-right"></i></a>
+                <a asp-action="Products" class="btn btn-primary btn-lg rounded-3">Shop Now <i class="bi bi-arrow-right"></i></a>
             </div>
             <!-- Hero Image -->
             <div class="col-lg-4 col-md-12">
@@ -81,18 +81,69 @@
     </div>
 </section>
 <!-- End Promotional Banner Section -->
-<!-- Start Category Showcase Section -->
-<section class="py-5 bg-light">
+<!-- Start Our Services Section -->
+<section class="py-4 bg-white" id="services">
     <div class="container">
-        <h2 class="text-center mb-4 fw-bold">Shop by Category</h2>
+        <h2 class="text-center mb-4 fw-bold">Our Services</h2>
+        <div class="row g-4 text-center">
+            <!-- Service 1 -->
+            <div class="col-lg-3 col-md-6 col-sm-6">
+                <div class="p-4 border-0 rounded-4 shadow">
+                    <div class="mb-3">
+                        <i class="bi bi-truck fs-1 text-secondary"></i> <!-- Bootstrap Icon -->
+                    </div>
+                    <h5 class="fw-semibold mb-2">Fast Delivery</h5>
+                    <p class="text-muted small">Get your products quickly with our express delivery service.</p>
+                </div>
+            </div>
+
+            <!-- Service 2 -->
+            <div class="col-lg-3 col-md-6 col-sm-6">
+                <div class="p-4 border-0 rounded-4 shadow">
+                    <div class="mb-3">
+                        <i class="bi bi-shield-lock fs-1 text-secondary"></i>
+                    </div>
+                    <h5 class="fw-semibold mb-2">Secure Payment</h5>
+                    <p class="text-muted small">All your transactions are safe and encrypted for maximum security.</p>
+                </div>
+            </div>
+
+            <!-- Service 3 -->
+            <div class="col-lg-3 col-md-6 col-sm-6">
+                <div class="p-4 border-0 rounded-4 shadow">
+                    <div class="mb-3">
+                        <i class="bi bi-arrow-repeat fs-1 text-secondary"></i>
+                    </div>
+                    <h5 class="fw-semibold mb-2">Easy Returns</h5>
+                    <p class="text-muted small">Not satisfied? Return your product within 30 days hassle-free.</p>
+                </div>
+            </div>
+
+            <!-- Service 4 -->
+            <div class="col-lg-3 col-md-6 col-sm-6">
+                <div class="p-4 border-0 rounded-4 shadow">
+                    <div class="mb-3">
+                        <i class="bi bi-headset fs-1 text-secondary"></i>
+                    </div>
+                    <h5 class="fw-semibold mb-2">24/7 Support</h5>
+                    <p class="text-muted small">Our support team is ready to help you anytime, anywhere.</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+<!-- End Our Services Section -->
+<!-- Start Category Showcase Section -->
+<section class="py-5">
+    <div class="container">
+        <h2 class=" mb-4 fw-bold">Popular Categories</h2>
         <div class="row g-4">
             <!-- Category 1 -->
             <div class="col-lg-3 col-md-6 col-sm-6">
                 <div class="card border-0 rounded-4 shadow-sm text-center">
-                    <img src="https://via.placeholder.com/300x200" class="card-img-top rounded-top-4" alt="Men's Clothing">
+                    <img src="https://placehold.jp/300x200.png" class="card-img-top rounded-top-4" alt="Men's Clothing">
                     <div class="card-body">
-                        <h5 class="card-title fw-medium">Men's Clothing</h5>
-                        <a href="#" class="btn btn-outline-primary btn-sm rounded-3">Explore</a>
+                        <h5 class="card-title fw-medium">Electronics</h5>
                     </div>
                 </div>
             </div>
@@ -101,8 +152,7 @@
                 <div class="card border-0 rounded-4 shadow-sm text-center">
                     <img src="https://via.placeholder.com/300x200" class="card-img-top rounded-top-4" alt="Women's Clothing">
                     <div class="card-body">
-                        <h5 class="card-title fw-medium">Women's Clothing</h5>
-                        <a href="#" class="btn btn-outline-primary btn-sm rounded-3">Explore</a>
+                        <h5 class="card-title fw-medium">Fashion</h5>
                     </div>
                 </div>
             </div>
@@ -112,7 +162,6 @@
                     <img src="https://via.placeholder.com/300x200" class="card-img-top rounded-top-4" alt="Accessories">
                     <div class="card-body">
                         <h5 class="card-title fw-medium">Accessories</h5>
-                        <a href="#" class="btn btn-outline-primary btn-sm rounded-3">Explore</a>
                     </div>
                 </div>
             </div>
@@ -121,8 +170,7 @@
                 <div class="card border-0 rounded-4 shadow-sm text-center">
                     <img src="https://via.placeholder.com/300x200" class="card-img-top rounded-top-4" alt="Footwear">
                     <div class="card-body">
-                        <h5 class="card-title fw-medium">Footwear</h5>
-                        <a href="#" class="btn btn-outline-primary btn-sm rounded-3">Explore</a>
+                        <h5 class="card-title fw-medium">Grocery</h5>
                     </div>
                 </div>
             </div>
@@ -131,7 +179,7 @@
 </section>
 <!-- End Category Showcase Section -->
 <!-- start Trending Products section -->
-<section class="py-5">
+<section class="py-5 mb-5" id="trending-products">
     <div class="container section-title">
         <h2 class=" text-center mb-4 fw-bold">Trending Products</h2>
         <div class="row row-cols-1 row-cols-md-4 g-4">
@@ -173,6 +221,10 @@
                     </div>
                 </div>
             }
+        </div>
+        <!-- View All Products Button -->
+        <div class="text-end mt-4">
+            <a asp-action="Products" class="btn btn-primary px-3 py-2 rounded-pill fw-semibold d-inline-flex align-items-center gap-2">View All Products <i class="bi bi-arrow-right fw-medium"></i></a>
         </div>
     </div>
 </section>

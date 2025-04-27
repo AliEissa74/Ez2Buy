@@ -48,7 +48,7 @@ namespace Ez2Buy.DataAccess.Repositories
         }
 
         //this is used to get the model by id
-        public T GetById(System.Linq.Expressions.Expression<Func<T, bool>> filter, string? includePorperties = null)
+        public T GetById(Expression<Func<T, bool>> filter, string? includePorperties = null)
 		{
 			IQueryable<T> query = dbSet;
 			query = query.Where(filter);
@@ -63,6 +63,7 @@ namespace Ez2Buy.DataAccess.Repositories
 			return query.FirstOrDefault(); //this is same as Category controller firstorDefault
 		}
 
+		//this is used to delete the model from the database model is the object to be deleted
 		public void Delete(T model)
 		{
 			dbSet.Remove(model);

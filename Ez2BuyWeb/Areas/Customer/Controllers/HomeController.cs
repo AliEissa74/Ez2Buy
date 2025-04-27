@@ -1,6 +1,7 @@
 using Ez2Buy.DataAccess.Contracts;
 using Ez2Buy.DataAccess.Models;
 using Ez2Buy.Utility;
+using Ez2BuyWeb.ViewModels;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using System.Diagnostics;
@@ -19,16 +20,49 @@ namespace Ez2BuyWeb.Areas.Customer.Controllers
             _unitOfWork = unitOfWork;
         }
 
-        //get all products from database
-        public IActionResult Index()
+
+		//get only 4 products from database in home page
+		public IActionResult Index()
         {
            
-            IEnumerable<Product> productList = _unitOfWork.Product.GetAll(includeProperties: "Category");
+            IEnumerable<Product> productList = _unitOfWork.Product.GetAll(includeProperties: "Category").Take(4);
             return View(productList);
         }
 
-        //single product details Page
-        public IActionResult Details(int productId)
+
+		//get all products from database
+		public IActionResult Products(int page = 1)
+		{           
+            int pageSize = 2; //number of products to display per page
+
+            
+            var totalProducts = _unitOfWork.Product.GetAll().Count(); //total number of products
+            
+            var totalPages = (int)Math.Ceiling((double)totalProducts / pageSize); //total number of pages
+
+            //ensure the page number is valid
+            page = Math.Max(1, page);  //page should be at least 1
+            page = Math.Min(page, totalPages);   //page should be at most totalPages
+
+
+            //get the products for the current page
+            var products = _unitOfWork.Product.GetAll(includeProperties: "Category")
+                .Skip((page - 1) * pageSize)
+                .Take(pageSize);
+
+            //create a view model to pass to the view
+            PagedProductVM PagedProductVM = new ()
+            {
+                Products = products,
+                CurrentPage = page,
+                TotalPages = totalPages,
+                PageSize = pageSize
+            };
+			return View(PagedProductVM);
+		}
+
+		//single product details Page
+		public IActionResult Details(int productId)
         {
             ShoppingCart cart = new()
             {
@@ -68,6 +102,12 @@ namespace Ez2BuyWeb.Areas.Customer.Controllers
             }
 
             return RedirectToAction(nameof(Index)); //Redirect to the index page
+        }
+
+
+        public IActionResult ContactUs()
+        {
+            return View();
         }
 
         //code to manage add to cart btn in home page for product

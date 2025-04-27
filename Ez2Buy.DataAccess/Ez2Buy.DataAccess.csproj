@@ -17,4 +17,8 @@
     </PackageReference>
   </ItemGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\Ez2Buy.Utility\Ez2Buy.Utility.csproj" />
+  </ItemGroup>
+
 </Project>
