@@ -7,8 +7,8 @@ using System.Threading.Tasks;
 
 namespace Ez2Buy.DataAccess.Contracts
 {
-	public interface ICategoryRepository : IRepositoryBase<Category>
+	public interface IShoppingCartRepository : IRepositoryBase<ShoppingCart>
 	{
-		void Update(Category obj);
+		void Update(ShoppingCart obj);
 	}
 }
