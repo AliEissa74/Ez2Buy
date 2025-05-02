@@ -55,8 +55,19 @@
 }
 else
 {
+@* 
+        <div class="btn-group">
+            <button class="btn btn-outline-dark dropdown-toggle fs-6" type="button" id="authDropdown" data-bs-toggle="dropdown" aria-expanded="false">
+                <i class="bi bi-person fs-4 pr-2 me-1"></i> Account
+            </button>
+            <ul class="dropdown-menu" aria-labelledby="authDropdown">
+                <li><a class="dropdown-item" asp-area="Identity" asp-page="/Account/Register">Register</a></li>
+                <li><a class="dropdown-item" asp-area="Identity" asp-page="/Account/Login">Login</a></li>
+            </ul>
+        </div> *@
 
-        <a class="btn d-flex align-items-center me-1" id="register" asp-area="Identity" asp-page="/Account/Register"> <i class="bi bi-person fs-5 pr-2"></i>Register</a>
+
+        @* <a class="btn d-flex align-items-center me-1" id="register" asp-area="Identity" asp-page="/Account/Register"> <i class="bi bi-person fs-5 pr-2"></i>Register</a> *@
 
 
         <a class="btn btn-outline-dark d-flex align-items-center " style="font-size:17px;" id="login" asp-area="Identity" asp-page="/Account/Login"><i class="bi bi-person fs-4 pr-2 me-1"></i>Login</a>

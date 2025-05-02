@@ -78,11 +78,17 @@ html {
     background-color: #BD7418 !important;
 }
 
-bg-success {
+.bg-success {
     background-color: #4b7147 !important;
 }
 
+.bg-light {
+    background-color: #FFF4E0 !important;
+}
 
+.bg-grey {
+    background-color: #F3F4F8 !important;
+}
 
 .card {
     border-color: #BD7418 !important;
@@ -654,9 +660,34 @@ bg-success {
     border-color: #dee2e6;
 }
 
+/*home category section start*/
+.category-item {
+    background-color: #f8f9fa;
+    border-radius: 10px;
+    padding: 30px 20px;
+    transition: 0.3s;
+    height: 180px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+.category-item:hover {
+    background-color: #e9ecef;
+    transform: translateY(-5px);
+}
+
+.category-item img {
+    width: 50px;
+    height: 50px;
+    object-fit: contain;
+    margin-bottom: 15px;
+}
+/*home category section ends*/
 
 /*footer section start*/
 footer {
+    margin-top: auto;
     background-color: #262626;
     color: #d3d3d3;
 }

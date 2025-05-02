@@ -15,93 +15,143 @@ using Stripe.Checkout;
 
 namespace Ez2BuyWeb.Areas.Admin.Controllers
 {
-	[Area("Admin")]
-	public class OrderController : Controller
-	{
-		private readonly IUnitOfWork _unitOfWork;
-		[BindProperty]  //bind the properties of the model to the view automate proccessing of data from the view(field,query string) to the controller and vice versa
+
+    /// Controller responsible for managing orders in the admin area.
+    /// Handles order processing, status updates, payments, and cancellations.
+    [Area("Admin")]
+    public class OrderController : Controller
+    {
+
+        /// Repository unit of work for database operations
+        private readonly IUnitOfWork _unitOfWork;
+        
+
+        /// The Order view model bound to the view for automatic data binding.
+        /// This enables automatic mapping of form data to the model.
+        [BindProperty]  // Binds the properties of the model to the view, automating processing of data from view to controller and vice versa
         public OrderVM OrderVM { get; set; }
+        
+
+        /// Initializes a new instance of the OrderController
+        /// param name="unitOfWork">The unit of work providing access to repositories
         public OrderController(IUnitOfWork unitOfWork)
         {
-			_unitOfWork = unitOfWork;
-		}
+            _unitOfWork = unitOfWork;
+        }
 
+
+        /// Displays the main order management page
+        /// returns>The Index view
         public IActionResult Index()
-		{
-			return View();
-		}
+        {
+            return View();
+        }
 
-		public IActionResult Details(int orderId)
-		{
-			OrderVM = new()
-			{
-				OrderHeader = _unitOfWork.OrderHeader.Get(u => u.Id == orderId, includeProperties: "AppUser"),
-				OrderDetail = _unitOfWork.OrderDetail.GetAll(u => u.OrderHeaderId == orderId, includeProperties: "Product")
-			};
 
-			return View(OrderVM);
-		}
+        /// Displays the details of a specific order
+        /// param name="orderId">The ID of the order to display
+        /// returns>The Details view with the order information
+        public IActionResult Details(int orderId)
+        {
+            OrderVM = new()
+            {
+                // Retrieve the order header with the associated user information
+                OrderHeader = _unitOfWork.OrderHeader.Get(u => u.Id == orderId, includeProperties: "AppUser"),
+                // Retrieve all order details with product information
+                OrderDetail = _unitOfWork.OrderDetail.GetAll(u => u.OrderHeaderId == orderId, includeProperties: "Product")
+            };
 
-        //update order details
+            return View(OrderVM);
+        }
+
+
+        /// Updates the order details for an existing order
+        /// returns>Redirects to the Details action with the updated order
         [HttpPost]
         [Authorize(Roles = SD.Role_Admin + "," + SD.Role_Employee)]
         public IActionResult UpdateOrderDetail()
         {
-			var orderHeaderFromDb = _unitOfWork.OrderHeader.Get(u => u.Id == OrderVM.OrderHeader.Id); //get the order header from the database
-            //update the order header with the new values
+            // Get the order header from the database
+            var orderHeaderFromDb = _unitOfWork.OrderHeader.Get(u => u.Id == OrderVM.OrderHeader.Id);
+            
+            // Update the order header with the new values
             orderHeaderFromDb.Name = OrderVM.OrderHeader.Name;
             orderHeaderFromDb.PhoneNumber = OrderVM.OrderHeader.PhoneNumber;
             orderHeaderFromDb.StreetAddress = OrderVM.OrderHeader.StreetAddress;
             orderHeaderFromDb.City = OrderVM.OrderHeader.City;
             orderHeaderFromDb.Governorate = OrderVM.OrderHeader.Governorate;
-			if (!string.IsNullOrEmpty(OrderVM.OrderHeader.Carrier))
-			{
-				orderHeaderFromDb.Carrier = OrderVM.OrderHeader.Carrier;
+            
+            // Only update carrier if provided
+            if (!string.IsNullOrEmpty(OrderVM.OrderHeader.Carrier))
+            {
+                orderHeaderFromDb.Carrier = OrderVM.OrderHeader.Carrier;
             }
+            
+            // Only update tracking number if provided
             if (!string.IsNullOrEmpty(OrderVM.OrderHeader.TrackingNumber))
             {
                 orderHeaderFromDb.TrackingNumber = OrderVM.OrderHeader.TrackingNumber;
             }
 
-			_unitOfWork.OrderHeader.Update(orderHeaderFromDb); //update the order header in the database
+            // Update the order in the database
+            _unitOfWork.OrderHeader.Update(orderHeaderFromDb);
             _unitOfWork.Save();
-			TempData["success"] = "Order Details Updated Successfully"; //show success message
-            return RedirectToAction(nameof(Details), new { orderId = orderHeaderFromDb.Id }); //redirect to the details page of the order and pass route value (order id) to method details
+            
+            // Add success message to TempData to be displayed on the next page
+            TempData["success"] = "Order Details Updated Successfully";
+            
+            // Redirect to the details page of the order, passing the order ID
+            return RedirectToAction(nameof(Details), new { orderId = orderHeaderFromDb.Id });
         }
 
-        //change order status to in process
-        [HttpPost]
-		[Authorize(Roles = SD.Role_Admin + "," + SD.Role_Employee)]
-		public IActionResult StartProcessing()
-		{
-			_unitOfWork.OrderHeader.UpdateStatus(OrderVM.OrderHeader.Id, SD.StatusInProcess);
-			_unitOfWork.Save();
-			TempData["success"] = "Order Status Updated Successfully";
-			return RedirectToAction(nameof(Details), new { orderId = OrderVM.OrderHeader.Id });
-		}
 
-        //change order status to shipped
+        /// Changes the order status to "In Process"
+        /// returns>Redirects to the Details action with the updated order
+        [HttpPost]
+        [Authorize(Roles = SD.Role_Admin + "," + SD.Role_Employee)]
+        public IActionResult StartProcessing()
+        {
+            // Update the order status to "In Process"
+            _unitOfWork.OrderHeader.UpdateStatus(OrderVM.OrderHeader.Id, SD.StatusInProcess);
+            _unitOfWork.Save();
+            
+            TempData["success"] = "Order Status Updated Successfully";
+            return RedirectToAction(nameof(Details), new { orderId = OrderVM.OrderHeader.Id });
+        }
+
+
+        /// Changes the order status to "Shipped" and updates shipping information
+        ///returns>Redirects to the Details action with the updated order
         [HttpPost]
         [Authorize(Roles = SD.Role_Admin + "," + SD.Role_Employee)]
         public IActionResult ShipOrder()
         {
-            var orderHeader = _unitOfWork.OrderHeader.Get(u => u.Id == OrderVM.OrderHeader.Id); //get the order header from the database
-			orderHeader.TrackingNumber = OrderVM.OrderHeader.TrackingNumber;
-			orderHeader.Carrier = OrderVM.OrderHeader.Carrier;
-			orderHeader.OrderStatus = SD.StatusShipped;
-			orderHeader.ShippingDate = DateTime.Now;
+            // Get the order header from the database
+            var orderHeader = _unitOfWork.OrderHeader.Get(u => u.Id == OrderVM.OrderHeader.Id);
+            
+            // Update shipping details
+            orderHeader.TrackingNumber = OrderVM.OrderHeader.TrackingNumber;
+            orderHeader.Carrier = OrderVM.OrderHeader.Carrier;
+            orderHeader.OrderStatus = SD.StatusShipped;
+            orderHeader.ShippingDate = DateTime.Now;
 
-			_unitOfWork.OrderHeader.Update(orderHeader);
+            _unitOfWork.OrderHeader.Update(orderHeader);
             _unitOfWork.Save();
+            
             TempData["success"] = "Order Shipped Successfully";
             return RedirectToAction(nameof(Details), new { orderId = OrderVM.OrderHeader.Id });
         }
 
+
+        /// Marks an order as delivered if it was previously in the shipped status
+        /// returns>Redirects to the Details action with the updated order
         [HttpPost]
         [Authorize(Roles = SD.Role_Admin + "," + SD.Role_Employee)]
         public IActionResult MarkAsDelivered()
         {
             var orderHeader = _unitOfWork.OrderHeader.Get(u => u.Id == OrderVM.OrderHeader.Id);
+            
+            // Only mark as delivered if the order was shipped
             if (orderHeader.OrderStatus == SD.StatusShipped)
             {
                 _unitOfWork.OrderHeader.UpdateStatus(OrderVM.OrderHeader.Id, SD.StatusDelivered);
@@ -112,46 +162,61 @@ namespace Ez2BuyWeb.Areas.Admin.Controllers
             {
                 TempData["error"] = "Cannot mark this order as Delivered. It must be in Shipped status.";
             }
+            
             return RedirectToAction(nameof(Details), new { orderId = OrderVM.OrderHeader.Id });
         }
 
-        //cancel order & refund by admin or employee
+
+        /// Cancels an order and issues a refund if payment was already processed.
+        /// This action is for admin and employee use.
+        /// returns>Redirects to the Details action with the updated order
         [HttpPost]
         [Authorize(Roles = SD.Role_Admin + "," + SD.Role_Employee)]
         public IActionResult CancelOrder()
-		{
-            var orderHeader = _unitOfWork.OrderHeader.Get(u => u.Id == OrderVM.OrderHeader.Id); //get the order header from the database
-			if(orderHeader.PaymentStatus == SD.PaymentStatusApproved)
+        {
+            // Get the order header from the database
+            var orderHeader = _unitOfWork.OrderHeader.Get(u => u.Id == OrderVM.OrderHeader.Id);
+            
+            // If payment was approved, issue a refund using Stripe
+            if(orderHeader.PaymentStatus == SD.PaymentStatusApproved)
             {
-                //refund the payment
-				var options = new RefundCreateOptions
+                // Configure the refund request
+                var options = new RefundCreateOptions
                 {
                     Reason = RefundReasons.RequestedByCustomer,
                     PaymentIntent = orderHeader.PaymentIntentId
                 };
 
+                // Create and process the refund
                 var service = new RefundService();
                 Refund refund = service.Create(options);
 
-                _unitOfWork.OrderHeader.UpdateStatus(orderHeader.Id, SD.StatusCancelled,SD.StatusRefunded);
-
+                // Update both order status and payment status
+                _unitOfWork.OrderHeader.UpdateStatus(orderHeader.Id, SD.StatusCancelled, SD.StatusRefunded);
             }
             else
             {
-                _unitOfWork.OrderHeader.UpdateStatus(orderHeader.Id, SD.StatusCancelled,SD.StatusCancelled);
+                // No payment to refund, just mark as cancelled
+                _unitOfWork.OrderHeader.UpdateStatus(orderHeader.Id, SD.StatusCancelled, SD.StatusCancelled);
             }
+            
             _unitOfWork.Save();
             TempData["success"] = "Order Cancelled Successfully";
             return RedirectToAction(nameof(Details), new { orderId = OrderVM.OrderHeader.Id });
         }
 
 
-        //cancel order by user before if he doesnt pay
+        /// Cancels an order by a customer if payment hasn't been made yet.
+        /// This action is for customer use only.
+        /// returns>Redirects to the Details action with the updated order
         [HttpPost]
         [Authorize(Roles = SD.Role_Customer)]
         public IActionResult CancelOrderUser()
         {
-            var orderHeader = _unitOfWork.OrderHeader.Get(u => u.Id == OrderVM.OrderHeader.Id); //get the order header from the database
+            // Get the order header from the database
+            var orderHeader = _unitOfWork.OrderHeader.Get(u => u.Id == OrderVM.OrderHeader.Id);
+            
+            // Only allow cancellation if the order is pending and payment is pending
             if (orderHeader.OrderStatus == SD.StatusPending && orderHeader.PaymentStatus == SD.PaymentStatusPending)
             {
                 _unitOfWork.OrderHeader.UpdateStatus(orderHeader.Id, SD.StatusCancelled, SD.StatusCancelled);
@@ -162,123 +227,160 @@ namespace Ez2BuyWeb.Areas.Admin.Controllers
             {
                 TempData["error"] = "Cannot cancel this order. Please contact technical support.";
             }
-             return RedirectToAction(nameof(Details), new { orderId = OrderVM.OrderHeader.Id });
+            
+            return RedirectToAction(nameof(Details), new { orderId = OrderVM.OrderHeader.Id });
         }
 
+
+        /// Processes payment for an order using Stripe Checkout.
+        /// This is triggered when a customer pays for an order from the details page.
+        /// returns>Redirects to Stripe Checkout
         [HttpPost]
         [ActionName("Details")]
         public IActionResult DetailsPayNow()
         {
-           OrderVM.OrderHeader = _unitOfWork.OrderHeader.Get(u => u.Id == OrderVM.OrderHeader.Id, includeProperties: "AppUser");
+            // Load the order with full details
+            OrderVM.OrderHeader = _unitOfWork.OrderHeader.Get(u => u.Id == OrderVM.OrderHeader.Id, includeProperties: "AppUser");
             OrderVM.OrderDetail = _unitOfWork.OrderDetail.GetAll(u => u.OrderHeaderId == OrderVM.OrderHeader.Id, includeProperties: "Product");
 
-            //stripe logic
-            var domain = Request.Scheme + "://" + Request.Host.Value + "/";  //This line builds the base URL of your website dynamically
-                                                                             //Example result: https://Ez2Buy.com/
+            // Set up Stripe Checkout session
+            // Build the domain URL dynamically (e.g., https://Ez2Buy.com/)
+            var domain = Request.Scheme + "://" + Request.Host.Value + "/";
+            
             var options = new SessionCreateOptions
             {
-                SuccessUrl = domain + $"admin/order/PaymentConfirmation?orderHeaderId={OrderVM.OrderHeader.Id}",  //redirect to the order confirmation page after payment success
-                CancelUrl = domain + $"admin/order/details?orderId={OrderVM.OrderHeader.Id}",                                                   //redirect to the cart page after payment cancel
-                LineItems = new List<SessionLineItemOptions>(),                                               //The actual items the customer is buying
-                Mode = "payment",                                                                             //payment tells Stripe this is a one-time payment
+                // Redirect URLs for success and cancel scenarios
+                SuccessUrl = domain + $"admin/order/PaymentConfirmation?orderHeaderId={OrderVM.OrderHeader.Id}",
+                CancelUrl = domain + $"admin/order/details?orderId={OrderVM.OrderHeader.Id}",
+                LineItems = new List<SessionLineItemOptions>(),
+                Mode = "payment", // One-time payment
             };
 
+            // Add each order item to the Stripe session
             foreach (var item in OrderVM.OrderDetail)
             {
                 var sessionLineItem = new SessionLineItemOptions
                 {
                     PriceData = new SessionLineItemPriceDataOptions
                     {
-                        UnitAmount = (long)(item.Price * 100), // $20.50 => 2050
+                        UnitAmount = (long)(item.Price * 100), // Convert to cents (e.g., $20.50 => 2050)
                         Currency = "usd",
                         ProductData = new SessionLineItemPriceDataProductDataOptions
                         {
-                            Name = item.Product.Name                            //product Name shown in the Stripe UI
+                            Name = item.Product.Name // Product name shown in Stripe UI
                         }
                     },
                     Quantity = item.Quantity
                 };
                 options.LineItems.Add(sessionLineItem);
             }
-            var service = new SessionService();        //This creates the Stripe session using the options defined above
+            
+            // Create the Stripe session
+            var service = new SessionService();
             Session session = service.Create(options);
+            
+            // Update the order with Stripe session information
             _unitOfWork.OrderHeader.UpdateStripePaymentId(OrderVM.OrderHeader.Id, session.Id, session.PaymentIntentId);
             _unitOfWork.Save();
-            Response.Headers.Add("Location", session.Url); //redirect to the stripe checkout page
-            return new StatusCodeResult(303); //303 is the status code for redirect
+            
+            // Redirect to the Stripe checkout page
+            Response.Headers.Add("Location", session.Url);
+            return new StatusCodeResult(303); // 303 is the status code for redirect
         }
 
 
+        /// Handles the return from Stripe after successful payment.
+        /// Verifies payment status and updates the order accordingly.
+        /// param name="orderHeaderId">The ID of the order that was paid
+        /// returns>The PaymentConfirmation view
         public IActionResult PaymentConfirmation(int orderHeaderId)
         {
             var orderHeader = _unitOfWork.OrderHeader.Get(u => u.Id == orderHeaderId);
+            
+            // Only process if payment was pending
             if(orderHeader.PaymentStatus == SD.PaymentStatusPending)
             {
+                // Verify payment with Stripe
                 var service = new SessionService();
-                Session session = service.Get(orderHeader.SessionId); //get the session from stripe using the session id
+                Session session = service.Get(orderHeader.SessionId);
+                
                 if (session.PaymentStatus.ToLower() == "paid")
                 {
+                    // Update order with payment confirmation
                     _unitOfWork.OrderHeader.UpdateStripePaymentId(orderHeaderId, session.Id, session.PaymentIntentId);
                     _unitOfWork.OrderHeader.UpdateStatus(orderHeaderId, SD.StatusApproved, SD.PaymentStatusApproved);
                     _unitOfWork.Save();
                 }
-  
             }
 
             return View(orderHeaderId);
         }
 
-        //api calls part
+        //------------------------------------------
+        // API CALLS
+        //------------------------------------------
         #region API CALLS
 
-
+        /// <summary>
+        /// API endpoint to retrieve orders based on their status.
+        /// Filters results by user role and status parameter.
+        /// </summary>
+        /// <param name="status">The status filter to apply (e.g., "pending", "approved", "shipped")
+        /// <returns>JSON data containing the filtered orders
         [HttpGet]
-		public IActionResult GetAll(string status)
-		{
+        public IActionResult GetAll(string status)
+        {
+            IEnumerable<OrderHeader> objOrderHeaders;
 
-			IEnumerable<OrderHeader> objOrderHeaders;
-
-            //logic to make sure that only admin and employee can see all orders and the rest of the users can only see their orders only
+            // Access control: Admin and employees can see all orders
+            // Regular users can only see their own orders
             if (User.IsInRole(SD.Role_Admin) || User.IsInRole(SD.Role_Employee))
-			{
+            {
                 objOrderHeaders = _unitOfWork.OrderHeader.GetAll(includeProperties: "AppUser").ToList();
-            }else {
-                //if the user is not admin or employee, get only the orders of the logged in user(first we need to get user id)
-				var claimsIdentity = (ClaimsIdentity)User.Identity;
+            }
+            else {
+                // Get user ID from claims
+                var claimsIdentity = (ClaimsIdentity)User.Identity;
                 var userId = claimsIdentity.FindFirst(ClaimTypes.NameIdentifier).Value;
 
+                // Filter to show only the logged-in user's orders
                 objOrderHeaders = _unitOfWork.OrderHeader.GetAll(u => u.AppUserId == userId, includeProperties: "AppUser");
             }
 
+            // Apply status filtering
             switch (status)
-			{
-				case "inprocess":
-					objOrderHeaders = objOrderHeaders.Where(u => u.OrderStatus == SD.StatusInProcess);
-					break;
-				case "pending":
-					objOrderHeaders = objOrderHeaders.Where(u => u.PaymentStatus == SD.PaymentStatusPending);
-					break;
-				case "approved":
-					objOrderHeaders = objOrderHeaders.Where(u => u.PaymentStatus == SD.PaymentStatusApproved && u.OrderStatus != SD.StatusInProcess && u.OrderStatus != SD.StatusShipped && u.OrderStatus != SD.StatusDelivered);
-					break;
-				case "shipped":
-					objOrderHeaders = objOrderHeaders.Where(u => u.OrderStatus == SD.StatusShipped && u.OrderStatus != SD.StatusCancelled && u.OrderStatus != SD.StatusDelivered);
-					break;
-				case "completed":
-					objOrderHeaders = objOrderHeaders.Where(u => u.OrderStatus == SD.StatusDelivered);
-					break;
-				case "cancelled":
-					objOrderHeaders = objOrderHeaders.Where(u => u.OrderStatus == SD.StatusCancelled);
-					break;
-				default:
-					break;
-			}
+            {
+                case "inprocess":
+                    objOrderHeaders = objOrderHeaders.Where(u => u.OrderStatus == SD.StatusInProcess);
+                    break;
+                case "pending":
+                    objOrderHeaders = objOrderHeaders.Where(u => u.PaymentStatus == SD.PaymentStatusPending);
+                    break;
+                case "approved":
+                    objOrderHeaders = objOrderHeaders.Where(u => u.PaymentStatus == SD.PaymentStatusApproved && 
+                                                               u.OrderStatus != SD.StatusInProcess && 
+                                                               u.OrderStatus != SD.StatusShipped && 
+                                                               u.OrderStatus != SD.StatusDelivered);
+                    break;
+                case "shipped":
+                    objOrderHeaders = objOrderHeaders.Where(u => u.OrderStatus == SD.StatusShipped && 
+                                                               u.OrderStatus != SD.StatusCancelled && 
+                                                               u.OrderStatus != SD.StatusDelivered);
+                    break;
+                case "completed":
+                    objOrderHeaders = objOrderHeaders.Where(u => u.OrderStatus == SD.StatusDelivered);
+                    break;
+                case "cancelled":
+                    objOrderHeaders = objOrderHeaders.Where(u => u.OrderStatus == SD.StatusCancelled);
+                    break;
+                default:
+                    break;
+            }
 
-			return Json(new { data = objOrderHeaders });
-		}
+            // Return the filtered data as JSON
+            return Json(new { data = objOrderHeaders });
+        }
 
-
-
-		#endregion
-	}
+        #endregion
+    }
 }

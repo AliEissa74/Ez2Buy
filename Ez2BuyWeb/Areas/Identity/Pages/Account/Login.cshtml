@@ -5,7 +5,7 @@
     ViewData["Title"] = "Log in";
 }
 
-<div class="container">
+<div class="container" style="max-width: 950px; margin:auto;">
 
     <div class="card shadow border-0 mt-4 card-margin">
         <div class="card-header bg-secondary bg-gradient ml-0 py-4">
@@ -21,7 +21,6 @@
                 <div class="col-md-12">
                     <section>
                         <form id="account" method="post">
-                            <h3 class="border-bottom pb-3 mb-4 text-secondary text-center">Use a local account to log in.</h3>
                             <div asp-validation-summary="ModelOnly" class="text-danger" role="alert"></div>
                             <div class="form-floating mb-3">
                                 <input asp-for="Input.Email" class="form-control" autocomplete="username" aria-required="true" placeholder="name@example.com" />
@@ -79,7 +78,7 @@
                                         <p>
                                             @foreach (var provider in Model.ExternalLogins!)
                                             {
-                                                <button type="submit" class="btn btn-primary" name="provider" value="@provider.Name" title="Log in using your @provider.DisplayName account">@provider.DisplayName</button>
+                                                <button type="submit" class="btn btn-outline-primary fs-6" name="provider" value="@provider.Name" title="Log in using your @provider.DisplayName account"><i class="bi bi-facebook fs-5 pe-2"></i> @provider.DisplayName</button>
                                             }
                                         </p>
                                     </div>

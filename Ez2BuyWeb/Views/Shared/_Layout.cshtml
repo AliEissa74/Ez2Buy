@@ -16,64 +16,38 @@
     <link rel="stylesheet" href="~/Ez2BuyWeb.styles.css" asp-append-version="true" />
 </head>
 <body>
-    @*     <header>
-    <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-dark bg-primary border-bottom box-shadow mb-3">
-    <div class="container-fluid">
-    <a class="navbar-brand text-light" asp-area="" asp-controller="Home" asp-action="Index">Ez2BuyWeb</a>
-    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target=".navbar-collapse" aria-controls="navbarSupportedContent"
-    aria-expanded="false" aria-label="Toggle navigation">
-    <span class="navbar-toggler-icon"></span>
-    </button>
-    <div class="navbar-collapse collapse d-sm-inline-flex justify-content-between ">
-    <ul class="navbar-nav flex-grow-1">
-    <li class="nav-item">
-    <a class="nav-link" asp-area="Customer" asp-controller="Home" asp-action="Index">Home</a>
-    </li>
-
-    <li class="nav-item">
-    <a class="nav-link" asp-area="Customer" asp-controller="Home" asp-action="Privacy">Privacy</a>
-    </li>
-    <li class="nav-item dropdown">
-    <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-    Content Management
-    </a>
-    <ul class="dropdown-menu">
-    <li class="nav-item">
-    <a class="dropdown-item" asp-area="Admin" asp-controller="Category" asp-action="Index">Category</a>
-    </li>
-    <li class="nav-item">
-    <a class="dropdown-item" asp-area="Admin" asp-controller="Product" asp-action="Index">Product</a>
-    </li>
-    <li><hr class="dropdown-divider"></li>
-    </ul>
-    </li>
-    </ul>
-    </div>
-    </div>
-    </nav>
-    </header> *@
-
-
+ 
     <!-- Top Info Bar -->
     <div class="top-bar border-bottom small py-2">
-        <div class="container d-flex justify-content-between align-items-center">
-            <div>
-                <span>Follow Us: </span>
-                <a class=""><i class="bi bi-facebook fs-4 text-dark"></i></a>
-                @*             <i class="bi bi-headset text-info"></i> +060 (800) 801-582 |
-                <i class="bi bi-envelope"></i> Ez2Buy@example.com *@
-            </div>
-            <div class="d-flex justify-content-center flex-grow-1" style="font-size:15px;">
-                <a asp-action="Index" class="text-decoration-none me-3 text-dark fw-medium"><i class="bi bi-house text-secondary"></i> Home</a>
-                <a asp-action="Products" class="text-decoration-none me-3 text-dark fw-medium"><i class="bi bi-box text-secondary"></i> Products</a>
-                <a asp-action="About" class="text-decoration-none me-3 text-dark fw-medium"><i class="bi bi-info-circle text-secondary"></i> About</a>
-                @* <a href="#" class="text-decoration-none me-3"><i class="bi bi-box-arrow-in-right"></i> Login</a> *@
+        <div class="container d-flex justify-content-between align-items-center flex-wrap">
 
+            <!-- Left Side: Social Media and Contact -->
+            <div class="d-flex align-items-center gap-2">
+                <span class="me-2">Follow Us:</span>
+                <a href="#"><i class="bi bi-facebook fs-5 text-dark"></i></a>
+                <a href="#"><i class="bi bi-instagram fs-5 text-dark"></i></a>
+                <a href="#"><i class="bi bi-twitter-x fs-5 text-dark"></i></a>
             </div>
+
+            <!-- Center: Home, Products, About -->
+            <div class="d-flex justify-content-center flex-grow-1" style="font-size:15px;">
+                <a asp-action="Index" class="text-decoration-none me-3 text-dark fw-medium">
+                    <i class="bi bi-house text-secondary"></i> Home
+                </a>
+                <a asp-action="Products" class="text-decoration-none me-3 text-dark fw-medium">
+                    <i class="bi bi-box text-secondary"></i> Products
+                </a>
+                <a asp-action="About" class="text-decoration-none me-3 text-dark fw-medium">
+                    <i class="bi bi-info-circle text-secondary"></i> About
+                </a>
+            </div>
+
+            <!-- Right Side: Empty (No Sign In / Register) -->
             <div>
-                
-@*                 <a href="#" class="btn btn-outline-dark btn-sm me-2">Sign In</a>
-                <a href="#" class="btn btn-dark btn-sm">Sign Up</a> *@
+                <span class="ms-3 d-none d-md-inline">
+                     <i class="bi bi-telephone"></i> 16422
+                    | <i class="bi bi-envelope"></i> support@ez2buy.tech
+                </span>
             </div>
         </div>
     </div>
@@ -145,19 +119,13 @@
 
     <div class="">
         @*here it was container as class by default *@
-        <main role="main" class="pb-3">
+        <main role="main" class="">
             <partial name="_Notification" />  @*notification partial view*@
             @RenderBody()
         </main>
     </div>
 
-    @* <footer class="border-top footer text-muted bg-primary">
-        <div class="container text-center text-light">
-            &copy; 2025 - Ez2BuyWeb
-        </div>
-    </footer> *@
-
-    <footer class="pt-5 pb-3">
+<footer class="pt-5 pb-3">
         <div class="container">
             <div class="row">
                 <!-- Site Name and Brief -->
@@ -208,15 +176,10 @@
                     <img src="~/images/static/stripe2.png" class="me-2" alt="Stripe" />
                     <img src="~/images/static/visa.png" alt="Visa" />
                     <img src="~/images/static/mastercard.png" alt="master Card" />
-
-
-@*                     <i class="bi bi-credit-card text-white"></i> <!-- Visa -->
-                    <i class="bi bi-credit-card-2-front text-white"></i> <!-- Mastercard -->
-                    <i class="bi bi-stripe text-white"></i> <!-- Stripe --> *@
                 </div>
             </div>
         </div>
-    </footer>
+</footer>
 
   
 
