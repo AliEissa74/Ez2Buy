@@ -7,3 +7,14 @@ Ez2Buy is an eCommerce web application built with ASP.NET Core MVC, providing a 
 <br />
 <br />
 </div>
+
+1.1 Non- Functional Requirements:
+•	Administration features
+o	User Management: Assign roles and manage user accounts.
+o	Order Management: View and update order statuses.
+o	Product & Category Management
+•	User Managamenet:
+o	Product Catalog search and filter
+o	Order Placement & Shopping Cart
+o	Payment gateway integration
+o	Email notification for confirmation
