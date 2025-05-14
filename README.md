@@ -18,7 +18,7 @@ Ez2Buy is an eCommerce web application built with ASP.NET Core MVC, providing a 
 - **Product & Category Management:** Create, update, and delete products and categories
 
 #### Customer Features
-- **Product Catalog:** Browse, search, and filter products
+- **Product Catalog:** Browse products using pagination
 - **Shopping Cart:** Add/remove items and proceed to checkout
 - **Order Processing:** Place orders and track order status
 - **Payment Integration:** Secure payment gateway support
@@ -34,8 +34,7 @@ Ez2Buy is an eCommerce web application built with ASP.NET Core MVC, providing a 
 ## 2. Architecture Overview
 
 ### 2.1 Layered Architecture
-- **Presentation Layer:** MVC Controllers and Views
-- **Business Logic Layer:** Services and ViewModel transformations
+- **Presentation Layer:**  MVC Controllers, Views, and ViewModels
 - **Data Access Layer:** UnitOfWork and Repository implementations
 - **Data Layer:** Entity Framework Core with SQL Server
 
@@ -60,8 +59,6 @@ Ez2Buy is an eCommerce web application built with ASP.NET Core MVC, providing a 
 - **API Development:** RESTful API endpoints for third-party integration
 - **AI Integration:** Product recommendations based on user behavior
 - **Customer Support:** Live chat support and intelligent chatbot
-- **Accessibility:** Voice search integration
 - **Enhanced UX:** Wishlists and product reviews
-- **Advanced Security:** Fraud detection mechanisms
 - **Vendor Portal:** Supplier registration, dashboard with analytics
 
